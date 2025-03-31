@@ -1,0 +1,23 @@
+:root {
+    font-size: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+/* Chrome, Edge ve Safari */
+::-webkit-scrollbar {
+    display: none;
+}
+/* Firefox */
+html {
+    scrollbar-width: none;
+}
+/* Other */
+html,
+body {
+    overflow: hidden;
+}
