@@ -9,4 +9,8 @@ module.exports = class Admin {
             [username, password]
         );
     }
+    // Get All Admins
+    static getAll() {
+        return connection.execute("SELECT * FROM admin");
+    }
 };
