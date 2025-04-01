@@ -61,15 +61,34 @@ app.post("/login", async (req, res) => {
     }
 });
 
-app.get("/admin/", async (req, res) => {
+app.get("/admin", async (req, res) => {
+    res.send("Hello There! Welcome to the admin page.");
+});
+
+app.get("/admin/student-list", async (req, res) => {
     const students = await Student.getAll();
-    const parents = await Parent.getAll();
-    const teachers = await Teacher.getAll();
-    const admins = await Admin.getAll();
     res.status(200).json({
         students: students[0],
+    });
+});
+
+app.get("/admin/parent-list", async (req, res) => {
+    const parents = await Parent.getAll();
+    res.status(200).json({
         parents: parents[0],
+    });
+});
+
+app.get("/admin/teacher-list", async (req, res) => {
+    const teachers = await Teacher.getAll();
+    res.status(200).json({
         teachers: teachers[0],
+    });
+});
+
+app.get("/admin/admin-list", async (req, res) => {
+    const admins = await Admin.getAll();
+    res.status(200).json({
         admins: admins[0],
     });
 });

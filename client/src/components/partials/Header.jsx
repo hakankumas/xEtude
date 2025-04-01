@@ -1,62 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 function Header() {
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
-            <div className="container-fluid">
-                <Link className="link home" to="/">
-                    EPS
-                </Link>
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div
-                    className="collapse navbar-collapse"
-                    id="navbarSupportedContent"
-                >
-                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                        <Link className="link" to="/">
-                            Home
-                        </Link>
-                        <Link className="link" to="/student">
-                            Student
-                        </Link>
-                        <Link className="link" to="/parent">
-                            Parent
-                        </Link>
-                        <Link className="link" to="/teacher">
-                            Teacher
-                        </Link>
-                        <Link className="link" to="/admin">
-                            Admin
-                        </Link>
-                    </ul>
-                    {/* <form className="d-flex" role="search">
-                        <input
-                            className="form-control me-2"
-                            type="search"
-                            placeholder="Search"
-                            aria-label="Search"
-                        />
-                        <button
-                            className="btn btn-outline-success"
-                            type="submit"
-                        >
-                            Search
-                        </button>
-                    </form> */}
-                </div>
-            </div>
-        </nav>
+        <div
+            className="d-flex flex-row justify-content-betweenx bg-light py-1 gap-3"
+            style={{ textDecoration: "none" }}
+        >
+            <a className="text-decoration-none text-dark" href="/">
+                home
+            </a>
+            <a className="text-decoration-none text-dark" href="/student">
+                student
+            </a>
+            <a className="text-decoration-none text-dark" href="/parent">
+                parent
+            </a>
+            <a className="text-decoration-none text-dark" href="/teacher">
+                teacher
+            </a>
+            <a className="text-decoration-none text-dark" href="/admin">
+                admin
+            </a>
+        </div>
     );
 }
 
