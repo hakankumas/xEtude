@@ -19,39 +19,55 @@ app.get("/", (req, res) => {
 
 // Login
 app.post("/login", async (req, res) => {
-    const { username, password, login_type } = req.body;
-    if (login_type) {
-        switch (login_type) {
+    const { username, password, type } = req.body;
+    if (type) {
+        switch (type) {
             case "student":
                 const student = await Student.get(req.body);
-                if (student[0] != false) res.status(200).json(student[0]);
+                if (student[0] != false)
+                    res.status(200).json({
+                        type: "student",
+                        user: student[0],
+                    });
                 else
                     res.status(401).json({
-                        message: "Invalid username or password",
+                        message: "Giriş İşlemi Başarısız!",
                     });
                 break;
             case "parent":
                 const parent = await Parent.get(req.body);
-                if (parent[0] != false) res.status(200).json(parent[0]);
+                if (parent[0] != false)
+                    res.status(200).json({
+                        type: "parent",
+                        user: parent[0],
+                    });
                 else
                     res.status(401).json({
-                        message: "Invalid username or password",
+                        message: "Giriş İşlemi Başarısız!",
                     });
                 break;
             case "teacher":
                 const teacher = await Teacher.get(req.body);
-                if (teacher[0] != false) res.status(200).json(teacher[0]);
+                if (teacher[0] != false)
+                    res.status(200).json({
+                        type: "teacher",
+                        user: teacher[0],
+                    });
                 else
                     res.status(401).json({
-                        message: "Invalid username or password",
+                        message: "Giriş İşlemi Başarısız!",
                     });
                 break;
             case "admin":
                 const admin = await Admin.get(req.body);
-                if (admin[0] != false) res.status(200).json(admin[0]);
+                if (admin[0] != false)
+                    res.status(200).json({
+                        type: "admin",
+                        user: admin[0],
+                    });
                 else
                     res.status(401).json({
-                        message: "Invalid username or password",
+                        message: "Giriş İşlemi Başarısız!",
                     });
                 break;
             default:

@@ -1,17 +1,95 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner";
 function Login() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const [formData, setFormData] = useState({
+        username: "",
+        password: "",
+        type: "",
+    });
+
+    const dispatch = useDispatch();
+    const { username, type, session, message } = useSelector(
+        (state) => state.auth
+    );
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!formData.username || !formData.password || !formData.type)
+            alert("Please fill all the fields");
+
+        const condition = {
+            username: formData.username,
+            password: formData.password,
+            type: formData.type,
+        };
+        setLoading(true);
+        setTimeout(() => {
+            dispatch(login(condition));
+        }, 500);
+    };
+
+    useEffect(() => {
+        if (session) {
+            switch (type) {
+                case "student":
+                    navigate("/student");
+                    break;
+                case "parent":
+                    navigate("/parent");
+                    break;
+                case "teacher":
+                    navigate("/teacher");
+                    break;
+                case "admin":
+                    navigate("/admin");
+                    break;
+            }
+        } else {
+            setError(message);
+        }
+        setLoading(false);
+    }, [session, type, message, navigate]);
+    if (loading) return <Spinner />;
     return (
         <div className="d-flex justify-content-center align-items-center vh-100 login-bg-color">
-            <form className="d-flex flex-column w-25 gap-1 mx-auto mt-5 border p-3 rounded login-form-bg">
+            <form
+                className="d-flex flex-column gap-1 mx-auto mt-5 border p-3 rounded login-form-bg col-12 col-md-8 col-xl-4"
+                onSubmit={handleSubmit}
+                method="POST"
+            >
                 <h1 className="text-center">Login Page</h1>
-
+                {error && (
+                    <div
+                        className="alert alert-danger text-center"
+                        role="alert"
+                    >
+                        {error}
+                    </div>
+                )}
                 <div className="mb-3">
-                    <label htmlFor="login_type" className="form-label">
+                    <label htmlFor="type" className="form-label">
                         Giriş Türü
                     </label>
                     <select
                         className="form-select"
-                        name="login_type"
-                        id="login_type"
+                        name="type"
+                        id="type"
+                        onChange={handleChange}
+                        value={formData.type}
                     >
                         <option value="">Seçiniz</option>
                         <option value="student">Öğrenci</option>
@@ -30,6 +108,8 @@ function Login() {
                         className="form-control"
                         name="username"
                         id="username"
+                        onChange={handleChange}
+                        value={formData.username}
                     />
                 </div>
 
@@ -42,6 +122,8 @@ function Login() {
                         className="form-control"
                         name="password"
                         id="password"
+                        onChange={handleChange}
+                        value={formData.password}
                     />
                 </div>
 

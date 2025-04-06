@@ -1,21 +1,19 @@
+const SERVER_URL = import.meta.env.VITE_API_BASE_URL;
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./scss/index.scss";
-
-const SERVER_URL = import.meta.env.VITE_API_BASE_URL;
-
+import { Route, Routes, useLocation } from "react-router-dom";
+import Header from "./components/partials/Header";
 import Sidebar from "./components/partials/Sidebar";
 import Footer from "./components/partials/Footer";
-import { Route, Routes, useLocation } from "react-router-dom";
-import Error from "./pages/Error";
 import Login from "./pages/Login";
-import Logout from "./pages/Logout";
+import Logout from "./components/Logout";
 import Home from "./pages/Home";
 import Student from "./pages/Student";
 import Parent from "./pages/Parent";
 import Teacher from "./pages/Teacher";
 import Admin from "./pages/Admin";
-import Header from "./components/partials/Header";
+import Error from "./pages/Error";
 
 function App() {
     const location = useLocation();
