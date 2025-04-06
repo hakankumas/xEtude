@@ -32,7 +32,7 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        session: (state) => {
+        is_session: (state) => {
             state.username = localStorage.getItem("username");
             state.type = localStorage.getItem("type");
             state.session = true;
@@ -62,5 +62,5 @@ export const authSlice = createSlice({
     },
 });
 
-export const { session, logout } = authSlice.actions;
+export const { is_session, logout } = authSlice.actions;
 export default authSlice.reducer;

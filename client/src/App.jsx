@@ -1,8 +1,9 @@
-const SERVER_URL = import.meta.env.VITE_API_BASE_URL;
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./scss/index.scss";
-import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/partials/Header";
 import Sidebar from "./components/partials/Sidebar";
 import Footer from "./components/partials/Footer";
@@ -14,13 +15,63 @@ import Parent from "./pages/Parent";
 import Teacher from "./pages/Teacher";
 import Admin from "./pages/Admin";
 import Error from "./pages/Error";
+import { is_session } from "./redux/features/auth/authSlice";
 
-function App() {
+const App = () => {
+    const { type, session } = useSelector((state) => state.auth);
+    const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(is_session());
+    }, [dispatch]);
+
     if (location.pathname === "/login") return <Login />;
     if (location.pathname === "/logout") return <Logout />;
     if (location.pathname === "/") return <Home />;
 
+    if (session) {
+        switch (type) {
+            case "student":
+                if (
+                    location.pathname !== "/student" &&
+                    !location.pathname.startsWith("/student/")
+                ) {
+                    navigate("/student");
+                }
+                break;
+            case "parent":
+                if (
+                    location.pathname !== "/parent" &&
+                    !location.pathname.startsWith("/parent/")
+                ) {
+                    navigate("/parent");
+                }
+                break;
+            case "teacher":
+                if (
+                    location.pathname !== "/teacher" &&
+                    !location.pathname.startsWith("/teacher/")
+                ) {
+                    navigate("/teacher");
+                }
+                break;
+            case "admin":
+                if (
+                    location.pathname !== "/admin" &&
+                    !location.pathname.startsWith("/admin/")
+                ) {
+                    navigate("/admin");
+                }
+                break;
+            default:
+                navigate("/logout");
+                return null;
+        }
+    }
+
+    // Eğer oturum açılmamışsa, burada yönlendirme yapılabilir
     return (
         <div>
             <Header />
@@ -51,6 +102,6 @@ function App() {
             </div>
         </div>
     );
-}
+};
 
 export default App;
