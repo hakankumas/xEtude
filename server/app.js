@@ -8,10 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-const Student = require("./models/Student");
-const Parent = require("./models/Parent");
-const Teacher = require("./models/Teacher");
-const Admin = require("./models/Admin");
+const User = require("./models/User");
 
 app.get("/", (req, res) => {
     res.send("Hello There! Welcome to the server.");
@@ -19,94 +16,14 @@ app.get("/", (req, res) => {
 
 // Login
 app.post("/login", async (req, res) => {
-    const { username, password, type } = req.body;
-    if (type) {
-        switch (type) {
-            case "student":
-                const student = await Student.get(req.body);
-                if (student[0] != false)
-                    res.status(200).json({
-                        type: "student",
-                        user: student[0],
-                    });
-                else
-                    res.status(401).json({
-                        message: "Giriş İşlemi Başarısız!",
-                    });
-                break;
-            case "parent":
-                const parent = await Parent.get(req.body);
-                if (parent[0] != false)
-                    res.status(200).json({
-                        type: "parent",
-                        user: parent[0],
-                    });
-                else
-                    res.status(401).json({
-                        message: "Giriş İşlemi Başarısız!",
-                    });
-                break;
-            case "teacher":
-                const teacher = await Teacher.get(req.body);
-                if (teacher[0] != false)
-                    res.status(200).json({
-                        type: "teacher",
-                        user: teacher[0],
-                    });
-                else
-                    res.status(401).json({
-                        message: "Giriş İşlemi Başarısız!",
-                    });
-                break;
-            case "admin":
-                const admin = await Admin.get(req.body);
-                if (admin[0] != false)
-                    res.status(200).json({
-                        type: "admin",
-                        user: admin[0],
-                    });
-                else
-                    res.status(401).json({
-                        message: "Giriş İşlemi Başarısız!",
-                    });
-                break;
-            default:
-                console.log("Invalid login type");
-                break;
-        }
+    try {
+        const user = await User.get(req.body);
+        if (user[0].length > 0) res.status(200).json({ user: user[0] });
+        else res.status(401).json({ message: "Invalid username or password." });
+    } catch (err) {
+        console.error("Login error:", err);
+        res.status(500).json({ message: "Something went wrong." });
     }
-});
-
-app.get("/admin", async (req, res) => {
-    res.send("Hello There! Welcome to the admin page.");
-});
-
-app.get("/admin/student-list", async (req, res) => {
-    const students = await Student.getAll();
-    res.status(200).json({
-        students: students[0],
-    });
-});
-
-app.get("/admin/parent-list", async (req, res) => {
-    const parents = await Parent.getAll();
-    res.status(200).json({
-        parents: parents[0],
-    });
-});
-
-app.get("/admin/teacher-list", async (req, res) => {
-    const teachers = await Teacher.getAll();
-    res.status(200).json({
-        teachers: teachers[0],
-    });
-});
-
-app.get("/admin/admin-list", async (req, res) => {
-    const admins = await Admin.getAll();
-    res.status(200).json({
-        admins: admins[0],
-    });
 });
 
 app.listen(process.env.PORT, () => {
