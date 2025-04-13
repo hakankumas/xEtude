@@ -3,20 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
+
 function Login() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const [formData, setFormData] = useState({
-        username: "",
-        password: "",
-        type: "",
+        input_username: "",
+        input_password: "",
     });
 
     const dispatch = useDispatch();
-    const { username, type, session, message } = useSelector(
-        (state) => state.auth
-    );
+    const { session, message } = useSelector((state) => state.auth);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -28,14 +26,16 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formData.username || !formData.password || !formData.type)
-            alert("Please fill all the fields");
+        if (!formData.input_username || !formData.input_password) {
+            alert("Lütfen tüm alanları doldurun");
+            return;
+        }
 
         const condition = {
-            username: formData.username,
-            password: formData.password,
-            type: formData.type,
+            username: formData.input_username,
+            password: formData.input_password,
         };
+
         setLoading(true);
         setTimeout(() => {
             dispatch(login(condition));
@@ -44,26 +44,15 @@ function Login() {
 
     useEffect(() => {
         if (session) {
-            switch (type) {
-                case "student":
-                    navigate("/student");
-                    break;
-                case "parent":
-                    navigate("/parent");
-                    break;
-                case "teacher":
-                    navigate("/teacher");
-                    break;
-                case "admin":
-                    navigate("/admin");
-                    break;
-            }
-        } else {
+            navigate("/");
+        } else if (message) {
             setError(message);
+            setLoading(false);
         }
-        setLoading(false);
-    }, [session, type, message, navigate]);
+    }, [session, message, navigate]);
+
     if (loading) return <Spinner />;
+
     return (
         <div className="d-flex justify-content-center align-items-center vh-100 login-bg-color">
             <form
@@ -71,7 +60,7 @@ function Login() {
                 onSubmit={handleSubmit}
                 method="POST"
             >
-                <h1 className="text-center">Login Page</h1>
+                <h1 className="text-center">Giriş Yap</h1>
                 {error && (
                     <div
                         className="alert alert-danger text-center"
@@ -81,49 +70,29 @@ function Login() {
                     </div>
                 )}
                 <div className="mb-3">
-                    <label htmlFor="type" className="form-label">
-                        Giriş Türü
-                    </label>
-                    <select
-                        className="form-select"
-                        name="type"
-                        id="type"
-                        onChange={handleChange}
-                        value={formData.type}
-                    >
-                        <option value="">Seçiniz</option>
-                        <option value="student">Öğrenci</option>
-                        <option value="parent">Veli</option>
-                        <option value="teacher">Öğretmen</option>
-                        <option value="admin">Yönetici</option>
-                    </select>
-                </div>
-
-                <div className="mb-3">
-                    <label htmlFor="username" className="form-label">
+                    <label htmlFor="input_username" className="form-label">
                         Kullanıcı Adı
                     </label>
                     <input
                         type="text"
                         className="form-control"
-                        name="username"
-                        id="username"
+                        name="input_username"
+                        id="input_username"
                         onChange={handleChange}
-                        value={formData.username}
+                        value={formData.input_username}
                     />
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="password" className="form-label">
+                    <label htmlFor="input_password" className="form-label">
                         Şifre
                     </label>
                     <input
                         type="password"
                         className="form-control"
-                        name="password"
-                        id="password"
+                        name="input_password"
                         onChange={handleChange}
-                        value={formData.password}
+                        value={formData.input_password}
                     />
                 </div>
 

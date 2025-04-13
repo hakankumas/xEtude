@@ -7,19 +7,13 @@ function Header() {
             style={{ textDecoration: "none" }}
         >
             <a className="text-decoration-none text-dark" href="/">
-                home
+                Etüt Planlama Sistemi
             </a>
-            <a className="text-decoration-none text-dark" href="/student">
-                student
+            <a className="text-decoration-none text-dark" href="/settings">
+                Ayarlar
             </a>
-            <a className="text-decoration-none text-dark" href="/parent">
-                parent
-            </a>
-            <a className="text-decoration-none text-dark" href="/teacher">
-                teacher
-            </a>
-            <a className="text-decoration-none text-dark" href="/admin">
-                admin
+            <a className="text-decoration-none text-dark" href="/logout">
+                Çıkış
             </a>
         </div>
     );
