@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import baseURL from "../../../utils/baseURL";
 
 const initialState = {
+    user_id: null,
     username: null,
     type: null,
     session: false,
@@ -31,18 +32,21 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         is_session: (state) => {
+            state.user_id = localStorage.getItem("user_id");
             state.username = localStorage.getItem("username");
             state.type = localStorage.getItem("type");
-            if (state.username && state.type) {
+            if (state.user_id && state.username && state.type) {
                 state.session = true;
                 state.message = null;
             }
         },
         logout: (state) => {
+            state.user_id = null;
             state.username = null;
             state.type = null;
             state.session = false;
             state.message = null;
+            localStorage.removeItem("user_id");
             localStorage.removeItem("username");
             localStorage.removeItem("type");
         },
@@ -50,10 +54,12 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(login.fulfilled, (state, action) => {
+                state.user_id = action?.payload.id;
                 state.username = action?.payload.username;
                 state.type = action?.payload.type;
                 state.session = true;
                 state.message = "Giriş Başarılı!";
+                localStorage.setItem("user_id", action?.payload.id);
                 localStorage.setItem("username", action?.payload.username);
                 localStorage.setItem("type", action?.payload.type);
             })
