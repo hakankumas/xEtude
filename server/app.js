@@ -8,16 +8,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-const User = require("./models/User");
-
-app.get("/", (req, res) => {
-    res.send("Hello There! Welcome to the server.");
-});
+// Models
+const Home = require("./models/Home");
 
 // Login
 app.post("/login", async (req, res) => {
     try {
-        const user = await User.get(req.body);
+        const user = await Home.login(req.body);
         if (user[0].length > 0) res.status(200).json({ user: user[0] });
         else res.status(401).json({ message: "Invalid username or password." });
     } catch (err) {
