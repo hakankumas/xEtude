@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Teacher from "../pages/Teacher";
 import Error from "../pages/Error";
 import Sidebar from "../components/partials/Sidebar";
+import Settings from "../components/Settings";
 
 function TeacherRoutes() {
     return (
@@ -19,6 +20,7 @@ function TeacherRoutes() {
                 >
                     <Routes>
                         <Route path="/" element={<Teacher />} />
+                        <Route path="/settings" element={<Settings />} />
                         <Route path="*" element={<Error />} />
                     </Routes>
                 </div>

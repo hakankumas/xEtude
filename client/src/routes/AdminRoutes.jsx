@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Admin from "../pages/Admin";
 import Error from "../pages/Error";
 import Sidebar from "../components/partials/Sidebar";
+import Settings from "../components/Settings";
 
 function AdminRoutes() {
     return (
@@ -19,6 +20,7 @@ function AdminRoutes() {
                 >
                     <Routes>
                         <Route path="/" element={<Admin />} />
+                        <Route path="/settings" element={<Settings />} />
                         <Route path="*" element={<Error />} />
                     </Routes>
                 </div>

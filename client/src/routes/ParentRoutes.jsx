@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Parent from "../pages/Parent";
 import Error from "../pages/Error";
 import Sidebar from "../components/partials/Sidebar";
+import Settings from "../components/Settings";
 
 function ParentRoutes() {
     return (
@@ -19,6 +20,7 @@ function ParentRoutes() {
                 >
                     <Routes>
                         <Route path="/" element={<Parent />} />
+                        <Route path="/settings" element={<Settings />} />
                         <Route path="*" element={<Error />} />
                     </Routes>
                 </div>

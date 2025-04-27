@@ -10,7 +10,7 @@ function Login() {
 
     const [formData, setFormData] = useState({
         input_username: "",
-        input_password: "",
+        input_password: "123",
     });
 
     const dispatch = useDispatch();

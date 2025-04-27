@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Student from "../pages/Student";
 import Error from "../pages/Error";
 import Sidebar from "../components/partials/Sidebar";
+import Settings from "../components/Settings";
 
 function StudentRoutes() {
     return (
@@ -19,6 +20,7 @@ function StudentRoutes() {
                 >
                     <Routes>
                         <Route path="/" element={<Student />} />
+                        <Route path="/settings" element={<Settings />} />
                         <Route path="*" element={<Error />} />
                     </Routes>
                 </div>
