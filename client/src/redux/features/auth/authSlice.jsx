@@ -36,7 +36,9 @@ export const authSlice = createSlice({
             state.user_id = localStorage.getItem("user_id");
             state.username = localStorage.getItem("username");
             state.type = localStorage.getItem("type");
-            state.class_number = localStorage.getItem("class_number");
+            if (state.type == "3") {
+                state.class_number = localStorage.getItem("class_number");
+            }
             if (state.user_id && state.username && state.type) {
                 state.session = true;
                 state.message = null;
@@ -45,13 +47,11 @@ export const authSlice = createSlice({
         logout: (state) => {
             state.user_id = null;
             state.username = null;
-            state.type = null;
-            state.class_number = null;
             state.session = false;
             state.message = null;
-            localStorage.removeItem("user_id");
-            localStorage.removeItem("username");
-            localStorage.removeItem("type");
+            state.class_number = null;
+            state.type = null;
+            localStorage.clear();
         },
     },
     extraReducers: (builder) => {
@@ -60,16 +60,18 @@ export const authSlice = createSlice({
                 state.user_id = action?.payload.id;
                 state.username = action?.payload.username;
                 state.type = action?.payload.type;
-                state.class_number = action?.payload.class_number;
                 state.session = true;
                 state.message = "Giriş Başarılı!";
                 localStorage.setItem("user_id", action?.payload.id);
                 localStorage.setItem("username", action?.payload.username);
                 localStorage.setItem("type", action?.payload.type);
-                localStorage.setItem(
-                    "class_number",
-                    action?.payload.class_number
-                );
+                if (action?.payload.type == "3") {
+                    state.class_number = action?.payload.class_number;
+                    localStorage.setItem(
+                        "class_number",
+                        action?.payload.class_number
+                    );
+                }
             })
             .addCase(login.rejected, (state, action) => {
                 state.session = false;
