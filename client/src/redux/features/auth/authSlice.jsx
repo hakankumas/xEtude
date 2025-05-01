@@ -5,7 +5,7 @@ const initialState = {
     user_id: null,
     username: null,
     type: null,
-    class: null,
+    class_number: null,
     session: false,
     message: null,
 };
@@ -36,7 +36,7 @@ export const authSlice = createSlice({
             state.user_id = localStorage.getItem("user_id");
             state.username = localStorage.getItem("username");
             state.type = localStorage.getItem("type");
-            state.class = localStorage.getItem("class");
+            state.class_number = localStorage.getItem("class_number");
             if (state.user_id && state.username && state.type) {
                 state.session = true;
                 state.message = null;
@@ -46,7 +46,7 @@ export const authSlice = createSlice({
             state.user_id = null;
             state.username = null;
             state.type = null;
-            state.class = null;
+            state.class_number = null;
             state.session = false;
             state.message = null;
             localStorage.removeItem("user_id");
@@ -60,13 +60,16 @@ export const authSlice = createSlice({
                 state.user_id = action?.payload.id;
                 state.username = action?.payload.username;
                 state.type = action?.payload.type;
-                state.class = action?.payload.class;
+                state.class_number = action?.payload.class_number;
                 state.session = true;
                 state.message = "Giriş Başarılı!";
                 localStorage.setItem("user_id", action?.payload.id);
                 localStorage.setItem("username", action?.payload.username);
                 localStorage.setItem("type", action?.payload.type);
-                localStorage.setItem("class", action?.payload.class);
+                localStorage.setItem(
+                    "class_number",
+                    action?.payload.class_number
+                );
             })
             .addCase(login.rejected, (state, action) => {
                 state.session = false;

@@ -47,8 +47,8 @@ module.exports = class Student {
 
                 etude.date_start as etude_date_start,
                 etude.date_end as etude_date_end,
-                etude.class as etude_class,
-                etude.private as etude_private,
+                etude.class_number as etude_class,
+                etude.private_status as etude_private,
                 etude.capacity as etude_capacity,
 
 				etude_join.number_of_etude_join
@@ -62,8 +62,9 @@ module.exports = class Student {
                 GROUP BY etude_enroll.etude_id
             ) as etude_join ON etude_join.etude_id = etude.id
             WHERE 
-                etude.private = 0 AND
-                etude.class = ?
+                etude.request = 0 AND
+                etude.private_status = 0 AND
+                etude.class_number = ?
         `,
             [etude_class]
         );
@@ -110,7 +111,6 @@ module.exports = class Student {
             [etude_enroll_id]
         );
     }
-
     static getEtudeReleaseById(condition) {
         const { etude_id, student_id } = condition;
         return connection.execute(
@@ -122,6 +122,43 @@ module.exports = class Student {
                 student_id = ?
             `,
             [etude_id, student_id]
+        );
+    }
+    static create_request_etude(condition) {
+        const {
+            teacher_id,
+            date_start,
+            date_end,
+            class_number,
+            private_status,
+            capacity,
+            request,
+            request_from,
+        } = condition;
+        return connection.execute(
+            `
+            INSERT INTO etude (
+                teacher_id,
+                date_start,
+                date_end,
+                class_number,
+                private_status,
+                capacity,
+                request,
+                request_from 
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `,
+            [
+                teacher_id,
+                date_start,
+                date_end,
+                class_number,
+                private_status,
+                capacity,
+                request,
+                request_from,
+            ]
         );
     }
 };

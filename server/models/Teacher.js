@@ -31,20 +31,20 @@ module.exports = class Teacher {
             WHERE type = 2`
         );
     }
-    static get_hoursOfWork(teacher_id) {
+    static getAll_workHours(teacher_id) {
         return connection.execute(
             `
             SELECT *
-            FROM teacher_work
+            FROM teacher_workhours
             WHERE teacher_id = ?`,
             [teacher_id]
         );
     }
-    static update_hoursOfWork(condition) {
+    static updateById_workHour(condition) {
         const { id, teacher_id, start, end } = condition;
         return connection.execute(
             `
-            UPDATE teacher_work
+            UPDATE teacher_workhours
             SET start = ?, end = ?
             WHERE id = ? AND teacher_id = ?`,
             [start, end, id, teacher_id]

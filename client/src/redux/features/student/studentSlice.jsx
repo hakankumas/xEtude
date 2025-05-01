@@ -58,6 +58,20 @@ export const release_etude = createAsyncThunk(
     }
 );
 
+// prettier-ignore
+export const create_request_etude = createAsyncThunk(
+    "student/create-request-etude",
+    async (condition, { rejectWithValue }) => {
+        try {
+            const response = await baseURL().post(`/student/create-request-etude`, condition);
+            console.log(response);
+            // return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data?.message + " | " + error.response.status + " " + error.response.statusText);
+        }
+    }
+);
+
 export const studentSlice = createSlice({
     name: "student",
     initialState,

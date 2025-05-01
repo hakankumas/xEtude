@@ -82,6 +82,28 @@ app.post("/student/release-etude", async (req, res) => {
     }
 });
 
+app.get("/teacher/all-teacher", async (req, res) => {
+    const teachers = await Teacher.getAll();
+    if (teachers[0].length > 0) res.status(200).json({ teachers: teachers[0] });
+    else res.status(404).json({ message: "Not found." });
+});
+
+app.post("/student/create-request-etude", async (req, res) => {
+    try {
+        const result = await Student.create_request_etude(req.body);
+        if (result[0].affectedRows > 0) {
+            res.status(200).json({
+                message: "Etude request created successfully.",
+            });
+        } else {
+            res.status(404).json({ message: "Not found." });
+        }
+    } catch (err) {
+        console.error("Create request etude error:", err);
+        res.status(500).json({ message: "Something went wrong." });
+    }
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);
 });

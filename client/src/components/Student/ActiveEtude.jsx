@@ -6,13 +6,15 @@ import {
     my_etudes,
     release_etude,
 } from "../../redux/features/student/studentSlice";
+import { useCustomSnackBar } from "../../hooks/useCustomSnackBar";
 
 function ActiveEtude() {
     const { etudes, mine_etudes } = useSelector((state) => state.student);
     const dispatch = useDispatch();
+    const { snackBar_success, snackBar_error } = useCustomSnackBar();
 
     useEffect(() => {
-        dispatch(active_etudes(localStorage.getItem("class")));
+        dispatch(active_etudes(localStorage.getItem("class_number")));
         dispatch(my_etudes(localStorage.getItem("user_id")));
     }, []);
 
@@ -21,10 +23,16 @@ function ActiveEtude() {
             etude_id,
             student_id: localStorage.getItem("user_id"),
         };
-        dispatch(enroll_etude(condition)).then(() => {
-            dispatch(active_etudes(localStorage.getItem("class")));
-            dispatch(my_etudes(localStorage.getItem("user_id")));
-        });
+
+        try {
+            dispatch(enroll_etude(condition)).then(() => {
+                dispatch(active_etudes(localStorage.getItem("class_number")));
+                dispatch(my_etudes(localStorage.getItem("user_id")));
+            });
+            snackBar_success();
+        } catch (error) {
+            snackBar_error();
+        }
     };
 
     const handleRelease = (etude_id) => {
@@ -32,10 +40,15 @@ function ActiveEtude() {
             etude_id,
             student_id: localStorage.getItem("user_id"),
         };
-        dispatch(release_etude(condition)).then(() => {
-            dispatch(active_etudes(localStorage.getItem("class")));
-            dispatch(my_etudes(localStorage.getItem("user_id")));
-        });
+        try {
+            dispatch(release_etude(condition)).then(() => {
+                dispatch(active_etudes(localStorage.getItem("class_number")));
+                dispatch(my_etudes(localStorage.getItem("user_id")));
+            });
+            snackBar_success();
+        } catch (error) {
+            snackBar_error();
+        }
     };
 
     // prettier-ignore
