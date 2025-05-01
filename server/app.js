@@ -104,6 +104,18 @@ app.post("/student/create-request-etude", async (req, res) => {
     }
 });
 
+app.get("/teacher/active-etudes/:teacher_id", async (req, res) => {
+    const etudes = await Teacher.getById_etudes(req.params.teacher_id, 0);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+});
+
+app.get("/teacher/request-etudes/:teacher_id", async (req, res) => {
+    const etudes = await Teacher.getById_etudes(req.params.teacher_id, 1);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);
 });
