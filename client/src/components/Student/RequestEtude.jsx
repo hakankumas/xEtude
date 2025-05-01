@@ -52,7 +52,7 @@ function RequestEtude() {
             date_end: randomDate && formData.date_full && formData.date_end ? `${formData.date_full} ${formData.date_end}:00`: null,
             class_number,
             private_status: formData.private_status,
-            capacity: formData.private_status ? 1 : null,
+            capacity: formData.private_status == 1 ? 1 : null,
             request: 1,
             request_from,
         };
@@ -86,37 +86,19 @@ function RequestEtude() {
     }, []);
 
     return (
+        // prettier-ignore
         <div>
-            <button
-                type="button"
-                className="btn btn-warning"
-                data-bs-toggle="modal"
-                data-bs-target="#requestEtude"
-            >
+            <button type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#requestEtude">
                 Etüt Talebi Oluştur
             </button>
-            <div
-                className="modal fade"
-                id="requestEtude"
-                tabIndex="-1"
-                aria-labelledby="requestEtudeModalLabel"
-                aria-hidden="true"
-            >
+            <div className="modal fade" id="requestEtude" tabIndex="-1" aria-labelledby="requestEtudeModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1
-                                className="modal-title fs-5"
-                                id="requestEtudeModalLabel"
-                            >
+                            <h1 className="modal-title fs-5" id="requestEtudeModalLabel">
                                 Etüt Talebi Oluştur
                             </h1>
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
                             <form>
@@ -166,74 +148,88 @@ function RequestEtude() {
                                         <option value="0">Hayır</option>
                                     </select>
                                 </div>
-                                <div className="mb-3 form-check">
-                                    <input
-                                        className="form-check-input"
-                                        type="checkbox"
-                                        disabled={
-                                            formData.private_status !== "1"
-                                        }
-                                        checked={randomDate}
-                                        onChange={(e) => {
-                                            setRandomDate(!randomDate);
-                                        }}
-                                    />
-                                    <label className="form-check-label">
-                                        Tarih Belirlemek İstiyorum.
-                                    </label>
-                                </div>
-                                <div className="mb-3">
-                                    <label className="form-label">Tarih</label>
-                                    <input
-                                        type="date"
-                                        className="form-control"
-                                        disabled={randomDate !== true}
-                                        value={formData.date_full}
-                                        onChange={(e) => {
-                                            setFormData({
-                                                ...formData,
-                                                date_full: e.target.value,
-                                            });
-                                        }}
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label className="form-label">
-                                        Başlangıç Saati
-                                    </label>
-                                    <input
-                                        type="time"
-                                        className="form-control"
-                                        disabled={randomDate !== true}
-                                        value={formData.date_start}
-                                        onChange={(e) => {
-                                            setFormData({
-                                                ...formData,
-                                                date_start: e.target.value,
-                                            });
-                                        }}
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label className="form-label">
-                                        Bitiş Saati
-                                    </label>
-                                    <input
-                                        type="time"
-                                        className="form-control"
-                                        disabled={randomDate !== true}
-                                        value={formData.date_end}
-                                        onChange={(e) => {
-                                            setFormData({
-                                                ...formData,
-                                                date_end: e.target.value,
-                                            });
-                                        }}
-                                        required
-                                    />
-                                </div>
+                                {formData.private_status == "1" && (
+                                    <div>
+                                        <div className="mb-3 form-check">
+                                            <input
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                disabled={
+                                                    formData.private_status !==
+                                                    "1"
+                                                }
+                                                checked={randomDate}
+                                                onChange={(e) => {
+                                                    setRandomDate(!randomDate);
+                                                }}
+                                            />
+                                            <label className="form-check-label">
+                                                Tarih Belirlemek İstiyorum.
+                                            </label>
+                                        </div>
+                                        {randomDate && (
+                                            <div>
+                                                <div className="mb-3">
+                                                    <label className="form-label">
+                                                        Tarih
+                                                    </label>
+                                                    <input
+                                                        type="date"
+                                                        className="form-control"
+                                                        disabled={randomDate !== true}
+                                                        value={formData.date_full}
+                                                        onChange={(e) => {
+                                                            setFormData({
+                                                                ...formData,
+                                                                date_full:
+                                                                    e.target.value,
+                                                            });
+                                                        }}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label className="form-label">
+                                                        Başlangıç Saati
+                                                    </label>
+                                                    <input
+                                                        type="time"
+                                                        className="form-control"
+                                                        disabled={randomDate !== true}
+                                                        value={formData.date_start}
+                                                        onChange={(e) => {
+                                                            setFormData({
+                                                                ...formData,
+                                                                date_start:
+                                                                    e.target.value,
+                                                            });
+                                                        }}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="mb-3">
+                                                    <label className="form-label">
+                                                        Bitiş Saati
+                                                    </label>
+                                                    <input
+                                                        type="time"
+                                                        className="form-control"
+                                                        disabled={randomDate !== true}
+                                                        value={formData.date_end}
+                                                        onChange={(e) => {
+                                                            setFormData({
+                                                                ...formData,
+                                                                date_end:
+                                                                    e.target.value,
+                                                            });
+                                                        }}
+                                                        required
+                                                    />
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
                             </form>
                         </div>
                         <div className="modal-footer">
