@@ -116,6 +116,52 @@ app.get("/teacher/request-etudes/:teacher_id", async (req, res) => {
     else res.status(404).json({ message: "Not found." });
 });
 
+app.get("/student/all-student", async (req, res) => {
+    const students = await Student.getAll();
+    if (students[0].length > 0) res.status(200).json({ students: students[0] });
+    else res.status(404).json({ message: "Not found." });
+});
+
+app.post("/teacher/create-etude", async (req, res) => {
+    try {
+        if (req.body.private_status == 1) {
+            const student = await Student.getById(req.body.private_student);
+            const student_class_number = student[0][0].class_number;
+            const result = await Teacher.create_etude_private(
+                req.body,
+                student_class_number
+            );
+            if (result[0].affectedRows > 0) {
+                const condition = {
+                    etude_id: result[0].insertId,
+                    student_id: req.body.private_student,
+                };
+                const student_enroll = await Student.enroll_etude(condition);
+                if (student_enroll[0].affectedRows > 0) {
+                    res.status(200).json({
+                        message: "Etude created and enrolled successfully.",
+                    });
+                }
+            } else {
+                res.status(404).json({ message: "Not found." });
+            }
+        }
+        if (req.body.private_status == 0) {
+            const result = await Teacher.create_etude_public(req.body);
+            if (result[0].affectedRows > 0) {
+                res.status(200).json({
+                    message: "Etude created successfully.",
+                });
+            } else {
+                res.status(404).json({ message: "Not found." });
+            }
+        }
+    } catch (err) {
+        console.error("Create etude error:", err);
+        res.status(500).json({ message: "Something went wrong." });
+    }
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);
 });

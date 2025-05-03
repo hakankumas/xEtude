@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useCustomSnackBar } from "../../hooks/useCustomSnackBar";
 
-const fetchUsers = async () => {
+const fetchTeachers = async () => {
     const res = await axios.get("http://localhost:3000/teacher/all-teacher");
     return res.data;
 };
@@ -15,7 +15,7 @@ function RequestEtude() {
 
     const { data, isLoading, isError, error } = useQuery({
         queryKey: ["users"],
-        queryFn: fetchUsers,
+        queryFn: fetchTeachers,
     });
 
     const { snackBar_success, snackBar_error } = useCustomSnackBar();
@@ -122,8 +122,10 @@ function RequestEtude() {
                                             <option>Yükleniyor...</option>
                                         ) : (
                                             // prettier-ignore
-                                            data?.teachers.map((teacher) => (
-                                                <option key={teacher.id} value={teacher.id}>{teacher.name} {teacher.surname}</option>
+                                            data?.teachers?.map((teacher) => (
+                                                <option key={teacher.id} value={teacher.id}>
+                                                    {teacher.name} {teacher.surname}
+                                                </option>
                                             ))
                                         )}
                                     </select>

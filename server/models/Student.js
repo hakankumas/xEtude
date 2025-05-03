@@ -28,7 +28,8 @@ module.exports = class Student {
             `
             SELECT * 
             FROM user 
-            WHERE type = 3`
+            WHERE type = 3
+            ORDER BY name ASC, surname ASC`
         );
     }
     static active_etudes(etude_class) {

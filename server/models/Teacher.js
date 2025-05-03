@@ -28,7 +28,8 @@ module.exports = class Teacher {
             `
             SELECT * 
             FROM user 
-            WHERE type = 2`
+            WHERE type = 2
+            ORDER BY name ASC, surname ASC`
         );
     }
     static getAll_workHours(teacher_id) {
@@ -74,6 +75,62 @@ module.exports = class Teacher {
                 etude.teacher_id = ?
             `,
             [request_status, teacher_id]
+        );
+    }
+    static create_etude_private(condition, student_class_number) {
+        const { teacher_id, date_start, date_end, private_status, capacity } =
+            condition;
+        return connection.execute(
+            `
+            INSERT INTO etude (
+                teacher_id,
+                date_start,
+                date_end,
+                private_status,
+                capacity,
+                class_number
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            `,
+            [
+                teacher_id,
+                date_start,
+                date_end,
+                private_status,
+                capacity,
+                student_class_number,
+            ]
+        );
+    }
+    static create_etude_public(condition) {
+        const {
+            teacher_id,
+            date_start,
+            date_end,
+            private_status,
+            class_number,
+            capacity,
+        } = condition;
+        return connection.execute(
+            `
+            INSERT INTO etude (
+                teacher_id,
+                date_start,
+                date_end,
+                private_status,
+                class_number,
+                capacity
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            `,
+            [
+                teacher_id,
+                date_start,
+                date_end,
+                private_status,
+                class_number,
+                capacity,
+            ]
         );
     }
 };

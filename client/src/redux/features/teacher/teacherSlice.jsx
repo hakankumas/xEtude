@@ -46,6 +46,19 @@ export const request_etudes = createAsyncThunk(
     }
 );
 
+// prettier-ignore
+export const create_etude = createAsyncThunk(
+    "teacher/create-etude",
+    async (condition, { rejectWithValue }) => {
+        try {
+            const response = await baseURL().post(`/teacher/create-etude`, condition);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(`${error.response.data.message} | ${error.response.status} ${error.response.statusText}`);
+        }
+    }
+);
+
 export const teacherSlice = createSlice({
     name: "teacher",
     initialState,
@@ -59,9 +72,11 @@ export const teacherSlice = createSlice({
             })
             .addCase(request_etudes.fulfilled, (state, action) => {
                 state.req_etudes = action.payload;
+            })
+            .addCase(create_etude.fulfilled, (state, action) => {
+                console.log("ok");
             });
     },
 });
 
-// export const {  } = teacherSlice.actions;
 export default teacherSlice.reducer;
