@@ -16,7 +16,8 @@ function ActiveEtude() {
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activeEtude">
                 Aktif Etütlerim
             </button>
-            <div className="modal fade" id="activeEtude" tabIndex="-1" aria-labelledby="activeEtudeModalLabel" aria-hidden="true">
+            {/* <div className="modal fade" id="activeEtude" tabIndex="-1" aria-labelledby="activeEtudeModalLabel" aria-hidden="true"> */}
+            <div className="modal fade" id="activeEtude">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
                         <div className="modal-header">

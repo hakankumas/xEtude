@@ -91,7 +91,8 @@ function CreateEtude() {
             <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEtude">
                 Yeni Bir Etüt Planla
             </button>
-            <div className="modal fade" id="createEtude" tabIndex="-1" aria-labelledby="createEtudeModalLabel" aria-hidden="true">
+            {/* <div className="modal fade" id="createEtude" tabIndex="-1" aria-labelledby="createEtudeModalLabel" aria-hidden="true"> */}
+            <div className="modal fade" id="createEtude">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

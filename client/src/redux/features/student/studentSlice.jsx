@@ -64,8 +64,7 @@ export const create_request_etude = createAsyncThunk(
     async (condition, { rejectWithValue }) => {
         try {
             const response = await baseURL().post(`/student/create-request-etude`, condition);
-            console.log(response);
-            // return response.data;
+            return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data?.message + " | " + error.response.status + " " + error.response.statusText);
         }
@@ -97,6 +96,9 @@ export const studentSlice = createSlice({
                 state.mine_etudes = state.mine_etudes.filter(
                     (etude) => etude.etude_id !== action.payload.etude_id
                 );
+            })
+            .addCase(create_request_etude.fulfilled, (state, action) => {
+                console.log(action.payload.message);
             });
     },
 });

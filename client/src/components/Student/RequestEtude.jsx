@@ -91,7 +91,8 @@ function RequestEtude() {
             <button type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#requestEtude">
                 Etüt Talebi Oluştur
             </button>
-            <div className="modal fade" id="requestEtude" tabIndex="-1" aria-labelledby="requestEtudeModalLabel" aria-hidden="true">
+            {/* <div className="modal fade" id="requestEtude" tabIndex="-1" aria-labelledby="requestEtudeModalLabel" aria-hidden="true"> */}
+            <div className="modal fade" id="requestEtude">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">

@@ -74,7 +74,7 @@ export const teacherSlice = createSlice({
                 state.req_etudes = action.payload;
             })
             .addCase(create_etude.fulfilled, (state, action) => {
-                console.log("ok");
+                console.log(action.payload.message);
             });
     },
 });
