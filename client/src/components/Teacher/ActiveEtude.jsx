@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { active_etudes } from "../../redux/features/teacher/teacherSlice";
 
 function ActiveEtude() {
-    const { etudes } = useSelector((state) => state.teacher);
+    const { etudes, req_etudes } = useSelector((state) => state.teacher);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(active_etudes(localStorage.getItem("user_id")));
-    }, []);
+    }, [req_etudes]);
 
     return (
         // prettier-ignore

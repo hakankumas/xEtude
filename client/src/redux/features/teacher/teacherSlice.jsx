@@ -59,6 +59,19 @@ export const create_etude = createAsyncThunk(
     }
 );
 
+// prettier-ignore
+export const update_request_etude = createAsyncThunk(
+    "teacher/update-request-etude",
+    async (condition, { rejectWithValue }) => {
+        try {
+            const response = await baseURL().post(`/teacher/update-request-etude`, condition);
+            return response.data.etude;
+        } catch (error) {
+            return rejectWithValue(`${error.response.data.message} | ${error.response.status} ${error.response.statusText}`);
+        }
+    }
+);
+
 export const teacherSlice = createSlice({
     name: "teacher",
     initialState,
@@ -75,6 +88,14 @@ export const teacherSlice = createSlice({
             })
             .addCase(create_etude.fulfilled, (state, action) => {
                 console.log(action.payload.message);
+            })
+            .addCase(update_request_etude.fulfilled, (state, action) => {
+                // Etüt İsteklerinden Çıkarıldı.
+                state.req_etudes = state.req_etudes.filter(
+                    (etude) => etude.etude_id !== action.payload.id
+                );
+                // Aktif Etütlere Eklendi.
+                state.etudes = [...state.etudes, action.payload];
             });
     },
 });

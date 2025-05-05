@@ -133,4 +133,19 @@ module.exports = class Teacher {
             ]
         );
     }
+    static update_request_etude(condition) {
+        const { etude_id, date_start, date_end, capacity } = condition;
+        return connection.execute(
+            `
+            UPDATE etude
+            SET 
+                date_start = ?, 
+                date_end = ?,
+                capacity = ?,
+                request = 0
+            WHERE id = ?
+            `,
+            [date_start, date_end, capacity, etude_id]
+        );
+    }
 };

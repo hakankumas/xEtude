@@ -12,6 +12,7 @@ app.use(cors());
 const Home = require("./models/Home");
 const Teacher = require("./models/Teacher");
 const Student = require("./models/Student");
+const Etude = require("./models/Etude");
 
 // Login
 app.post("/login", async (req, res) => {
@@ -158,6 +159,34 @@ app.post("/teacher/create-etude", async (req, res) => {
         }
     } catch (err) {
         console.error("Create etude error:", err);
+        res.status(500).json({ message: "Something went wrong." });
+    }
+});
+
+app.post("/teacher/update-request-etude", async (req, res) => {
+    try {
+        const result = await Teacher.update_request_etude(req.body);
+        if (result[0].affectedRows > 0) {
+            const updatedEtude = await Etude.getById(req.body.etude_id);
+            if (updatedEtude[0].length > 0) {
+                const condition = {
+                    etude_id: updatedEtude[0][0].id,
+                    student_id: updatedEtude[0][0].request_from,
+                };
+                const enroll_etude = await Student.enroll_etude(condition);
+                if (enroll_etude[0].affectedRows > 0) {
+                    res.status(200).json({
+                        message:
+                            "Etude request updated successfully and student enrolled.",
+                        etude: updatedEtude[0][0],
+                    });
+                }
+            }
+        } else {
+            res.status(404).json({ message: "Not found." });
+        }
+    } catch (err) {
+        console.error("Create request etude error:", err);
         res.status(500).json({ message: "Something went wrong." });
     }
 });
