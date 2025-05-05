@@ -48,8 +48,8 @@ module.exports = class Parent {
                 user_student.surname as student_surname
 
             FROM family
-            INNER JOIN user AS user_student ON family.student = user_student.id
-            INNER JOIN user AS user_parent ON family.parent = user_parent.id
+            INNER JOIN user AS user_student ON family.student_id = user_student.id
+            INNER JOIN user AS user_parent ON family.parent_id = user_parent.id
             WHERE parent = ?`,
             [id]
         );
