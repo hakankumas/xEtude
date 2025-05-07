@@ -191,6 +191,28 @@ app.post("/teacher/update-request-etude", async (req, res) => {
     }
 });
 
+app.post("/teacher/create-notice", async (req, res) => {
+    try {
+        const result = await Etude.insert_notice(req.body);
+        if (result[0].affectedRows > 0) {
+            res.status(200).json({
+                message: "Notice created successfully.",
+            });
+        } else {
+            res.status(404).json({ message: "Not found." });
+        }
+    } catch (err) {
+        console.error("Create request etude error:", err);
+        res.status(500).json({ message: "Something went wrong." });
+    }
+});
+
+app.get("/teacher/get-notices/:etude_id", async (req, res) => {
+    const notices = await Etude.getById_notices(req.params.etude_id);
+    if (notices[0].length > 0) res.status(200).json({ notices: notices[0] });
+    else res.status(404).json({ message: "Not found." });
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);
 });

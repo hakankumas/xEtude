@@ -5,6 +5,7 @@ const initialState = {
     work_hours: [],
     etudes: [],
     req_etudes: [],
+    notices: [],
 };
 
 // prettier-ignore
@@ -72,6 +73,32 @@ export const update_request_etude = createAsyncThunk(
     }
 );
 
+// prettier-ignore
+export const create_notice = createAsyncThunk(
+    "teacher/create-notice",
+    async (condition, { rejectWithValue }) => {
+        try {
+            const response = await baseURL().post(`/teacher/create-notice`, condition);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(`${error.response.data.message} | ${error.response.status} ${error.response.statusText}`);
+        }
+    }
+);
+
+// prettier-ignore
+export const get_notices = createAsyncThunk(
+    "teacher/get-notices",
+    async (etude_id, { rejectWithValue }) => {
+        try {
+            const response = await baseURL().get(`/teacher/get-notices/${etude_id}`);
+            return response.data.notices;
+        } catch (error) {
+            return rejectWithValue(`${error.response.data.message} | ${error.response.status} ${error.response.statusText}`);
+        }
+    }
+);
+
 export const teacherSlice = createSlice({
     name: "teacher",
     initialState,
@@ -96,6 +123,13 @@ export const teacherSlice = createSlice({
                 );
                 // Aktif Etütlere Eklendi.
                 state.etudes = [...state.etudes, action.payload];
+            })
+            .addCase(create_notice.fulfilled, (state, action) => {
+                console.log(action.payload.message);
+            })
+            .addCase(get_notices.fulfilled, (state, action) => {
+                console.log(action.payload);
+                state.notices = action.payload;
             });
     },
 });

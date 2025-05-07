@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { active_etudes } from "../../redux/features/teacher/teacherSlice";
+import CreateNotice from "./CreateNotice";
 
 function ActiveEtude() {
     const { etudes, req_etudes } = useSelector((state) => state.teacher);
@@ -10,13 +11,17 @@ function ActiveEtude() {
         dispatch(active_etudes(localStorage.getItem("user_id")));
     }, [req_etudes]);
 
+    const [selectedEtude, setSelectedEtude] = useState(null);
+    const handleNotificationClick = (etude) => setSelectedEtude(etude);
+
     return (
         // prettier-ignore
         <div>
+
             <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activeEtude">
                 Aktif Etütlerim
             </button>
-            {/* <div className="modal fade" id="activeEtude" tabIndex="-1" aria-labelledby="activeEtudeModalLabel" aria-hidden="true"> */}
+
             <div className="modal fade" id="activeEtude">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">
@@ -49,7 +54,16 @@ function ActiveEtude() {
                                             <td>{etude.etude_date_start && new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
                                             <td>{etude.etude_date_end && new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
                                             <td>{etude.etude_capacity}</td>
-                                            <td><a href="#/${etude.etude_request}" className="btn btn-primary">Bildirim</a></td>
+                                            <td>
+                                                <button 
+                                                    className="btn btn-primary"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#notificationModal"
+                                                    onClick={() => handleNotificationClick(etude)}
+                                                >
+                                                    Bildirim
+                                                </button>
+                                            </td>
                                         </tr>
                                     ))}
                                     </tbody>
@@ -59,6 +73,7 @@ function ActiveEtude() {
                     </div>
                 </div>
             </div>
+            <CreateNotice selectedEtude={selectedEtude} />
         </div>
     );
 }
