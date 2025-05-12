@@ -4,6 +4,7 @@ import baseURL from "../../../utils/baseURL";
 const initialState = {
     etudes: [],
     mine_etudes: [],
+    mine_notices: [],
 };
 
 // prettier-ignore
@@ -71,6 +72,19 @@ export const create_request_etude = createAsyncThunk(
     }
 );
 
+// prettier-ignore
+export const get_notices = createAsyncThunk(
+    "student/get-notices",
+    async (student_id, { rejectWithValue }) => {
+        try {
+            const response = await baseURL().get(`/student/get-notices/${student_id}`);
+            return response.data.notices;
+        } catch (error) {
+            return rejectWithValue(error.response.data?.message + " | " + error.response.status + " " + error.response.statusText);
+        }
+    }
+);
+
 export const studentSlice = createSlice({
     name: "student",
     initialState,
@@ -99,6 +113,9 @@ export const studentSlice = createSlice({
             })
             .addCase(create_request_etude.fulfilled, (state, action) => {
                 console.log(action.payload.message);
+            })
+            .addCase(get_notices.fulfilled, (state, action) => {
+                state.mine_notices = action.payload;
             });
     },
 });

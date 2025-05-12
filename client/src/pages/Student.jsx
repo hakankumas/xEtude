@@ -1,6 +1,6 @@
-import React from "react";
 import ActiveEtude from "../components/Student/ActiveEtude";
 import RequestEtude from "../components/Student/RequestEtude";
+import Notices from "../components/Student/Notices";
 
 function Student() {
     return (
@@ -9,6 +9,7 @@ function Student() {
                 <h1>Student</h1>
                 <ActiveEtude />
                 <RequestEtude />
+                <Notices />
             </div>
             <hr />
         </div>

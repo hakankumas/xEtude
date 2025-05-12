@@ -12,17 +12,6 @@ module.exports = class Student {
             [id]
         );
     }
-    static getByUsername(username) {
-        return connection.execute(
-            `
-            SELECT * 
-            FROM user 
-            WHERE 
-                type = 3 AND 
-                username = ?`,
-            [username]
-        );
-    }
     static getAll() {
         return connection.execute(
             `
@@ -160,6 +149,24 @@ module.exports = class Student {
                 request,
                 request_from,
             ]
+        );
+    }
+    static get_notices(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                etude_notice.etude_id as etude_notice_etude_id,
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname,
+                etude_notice.notice as etude_notice_content,
+                etude_notice.createdAt as etude_notice_createdAt
+            FROM etude_notice
+            LEFT JOIN etude ON etude_notice.etude_id = etude.id
+            LEFT JOIN etude_enroll ON etude_enroll.etude_id = etude.id
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            WHERE etude_enroll.student_id = ?
+        `,
+            [student_id]
         );
     }
 };

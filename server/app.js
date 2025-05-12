@@ -213,6 +213,18 @@ app.get("/teacher/get-notices/:etude_id", async (req, res) => {
     else res.status(404).json({ message: "Not found." });
 });
 
+app.get("/student/get-notices/:student_id", async (req, res) => {
+    try {
+        const notices = await Student.get_notices(req.params.student_id);
+        if (notices[0].length > 0)
+            res.status(200).json({ notices: notices[0] });
+        else res.status(404).json({ message: "Not found." });
+    } catch (error) {
+        console.error("Get notices error:", error);
+        res.status(500).json({ message: "Something went wrong." });
+    }
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);
 });

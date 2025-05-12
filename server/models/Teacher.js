@@ -12,17 +12,6 @@ module.exports = class Teacher {
             [id]
         );
     }
-    static getByUsername(username) {
-        return connection.execute(
-            `
-            SELECT * 
-            FROM user 
-            WHERE 
-                type = 2 AND 
-                username = ?`,
-            [username]
-        );
-    }
     static getAll() {
         return connection.execute(
             `
@@ -41,16 +30,16 @@ module.exports = class Teacher {
             [teacher_id]
         );
     }
-    static updateById_workHour(condition) {
-        const { id, teacher_id, start, end } = condition;
-        return connection.execute(
-            `
-            UPDATE teacher_workhours
-            SET start = ?, end = ?
-            WHERE id = ? AND teacher_id = ?`,
-            [start, end, id, teacher_id]
-        );
-    }
+    // static updateById_workHour(condition) {
+    //     const { id, teacher_id, start, end } = condition;
+    //     return connection.execute(
+    //         `
+    //         UPDATE teacher_workhours
+    //         SET start = ?, end = ?
+    //         WHERE id = ? AND teacher_id = ?`,
+    //         [start, end, id, teacher_id]
+    //     );
+    // }
     static getById_etudes(teacher_id, request_status) {
         return connection.execute(
             `
