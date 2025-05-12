@@ -1,0 +1,12 @@
+const Home = require("../models/Home");
+
+exports.login = async (req, res) => {
+    try {
+        const user = await Home.login(req.body);
+        if (user[0].length > 0) res.status(200).json({ user: user[0] });
+        else res.status(401).json({ message: "Invalid username or password." });
+    } catch (err) {
+        console.error("Login error:", err);
+        res.status(500).json({ message: "Something went wrong." });
+    }
+};

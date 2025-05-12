@@ -165,6 +165,7 @@ module.exports = class Student {
             LEFT JOIN etude_enroll ON etude_enroll.etude_id = etude.id
             LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
             WHERE etude_enroll.student_id = ?
+            ORDER BY etude_notice_createdAt DESC
         `,
             [student_id]
         );
