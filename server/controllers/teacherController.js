@@ -8,23 +8,54 @@ exports.all_teacher = async (req, res) => {
     else res.status(404).json({ message: "Not found." });
 };
 
-// exports.work_hours = async (req, res) => {
-//     const workhours = await Teacher.getAll_workHours(req.params.id);
-//     if (workhours[0].length > 0)
-//         res.status(200).json({ workhours: workhours[0] });
-//     else res.status(404).json({ message: "Not found." });
-// };
-
 exports.active_etudes = async (req, res) => {
-    const etudes = await Teacher.getById_etudes(req.params.teacher_id, 0);
+    const etudes = await Teacher.active_etudes_getByTeacherId(
+        req.params.teacher_id
+    );
     if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
     else res.status(404).json({ message: "Not found." });
 };
 
 exports.request_etudes = async (req, res) => {
-    const etudes = await Teacher.getById_etudes(req.params.teacher_id, 1);
+    const etudes = await Teacher.request_etudes_getByTeacherId(
+        req.params.teacher_id
+    );
     if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
     else res.status(404).json({ message: "Not found." });
+};
+
+exports.attend_etudes_teacher = async (req, res) => {
+    const attends_teacher = await Teacher.attend_etudes_getByTeacherId(
+        req.params.teacher_id
+    );
+    if (attends_teacher[0].length > 0)
+        res.status(200).json({ attends_teacher: attends_teacher[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.attend_etudes_etude = async (req, res) => {
+    const attends_etude = await Teacher.attend_etudes_getByEtudeId(
+        req.params.etude_id
+    );
+    if (attends_etude[0].length > 0)
+        res.status(200).json({ attends_etude: attends_etude[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.update_attend_etude = async (req, res) => {
+    try {
+        const result = await Teacher.update_attend_etude(req.body);
+        if (result[0].affectedRows > 0) {
+            res.status(200).json({
+                message: "Etude updated successfully.",
+            });
+        } else {
+            res.status(404).json({ message: "Not found." });
+        }
+    } catch (err) {
+        console.error("Update attend etude error:", err);
+        res.status(500).json({ message: "Something went wrong." });
+    }
 };
 
 exports.create_etude = async (req, res) => {

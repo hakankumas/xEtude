@@ -21,26 +21,7 @@ module.exports = class Teacher {
             ORDER BY name ASC, surname ASC`
         );
     }
-    static getAll_workHours(teacher_id) {
-        return connection.execute(
-            `
-            SELECT *
-            FROM teacher_workhours
-            WHERE teacher_id = ?`,
-            [teacher_id]
-        );
-    }
-    // static updateById_workHour(condition) {
-    //     const { id, teacher_id, start, end } = condition;
-    //     return connection.execute(
-    //         `
-    //         UPDATE teacher_workhours
-    //         SET start = ?, end = ?
-    //         WHERE id = ? AND teacher_id = ?`,
-    //         [start, end, id, teacher_id]
-    //     );
-    // }
-    static getById_etudes(teacher_id, request_status) {
+    static active_etudes_getByTeacherId(teacher_id) {
         return connection.execute(
             `
             SELECT 
@@ -60,10 +41,91 @@ module.exports = class Teacher {
             FROM etude
             LEFT JOIN user as student ON etude.request_from = student.id
             WHERE 
-                etude.request = ? AND
-                etude.teacher_id = ?
+                etude.request = 0 AND
+                etude.teacher_id = ? AND
+                etude.date_start >= CURDATE()
+            ORDER BY etude.date_start ASC
             `,
-            [request_status, teacher_id]
+            [teacher_id]
+        );
+    }
+    static request_etudes_getByTeacherId(teacher_id) {
+        return connection.execute(
+            `
+            SELECT 
+                etude.id as etude_id,
+                etude.teacher_id as teacher_id,
+                
+                etude.date_start as etude_date_start,
+                etude.date_end as etude_date_end,
+                etude.class_number as etude_class_number,
+                etude.private_status as etude_private_status,
+                etude.capacity as etude_capacity,
+                etude.request as etude_request,
+                
+                student.id as student_id,
+                student.name as student_name,
+                student.surname as student_surname
+            FROM etude
+            LEFT JOIN user as student ON etude.request_from = student.id
+            WHERE 
+                etude.request = 1 AND
+                etude.teacher_id = 17
+            ORDER BY etude.id DESC
+            `,
+            [teacher_id]
+        );
+    }
+    static attend_etudes_getByTeacherId(teacher_id) {
+        return connection.execute(
+            `
+            SELECT 
+                id as etude_id, 
+                teacher_id, 
+                date_start,
+                class_number,
+                private_status,
+                capacity
+            FROM etude
+            WHERE 
+                teacher_id = ? AND
+                date_start <= CURDATE()
+            ORDER BY id DESC;
+            `,
+            [teacher_id]
+        );
+    }
+    static attend_etudes_getByEtudeId(etude_id) {
+        return connection.execute(
+            `
+            SELECT 
+                etude.id as etude_id,
+                etude.teacher_id as teacher_id,
+                etude.date_start as date_start,
+                etude_enroll.id as etude_enroll_id,
+                etude_enroll.student_id as student_id,
+                student.name as student_name,
+                student.surname as student_surname,
+                etude_enroll.attend as attend
+            FROM etude_enroll
+            LEFT JOIN etude ON etude_enroll.etude_id = etude.id
+            LEFT JOIN user as student ON etude_enroll.student_id = student.id
+            WHERE etude.id = ?
+            `,
+            [etude_id]
+        );
+    }
+    static update_attend_etude(condition) {
+        const { etude_id, student_id, attend_status } = condition;
+        return connection.execute(
+            `
+            UPDATE etude_enroll
+            SET attend = ?
+            WHERE 
+                etude_id = ? AND
+                student_id = ?
+            `,
+            [attend_status, etude_id, student_id]
         );
     }
     static create_etude_private(condition, student_class_number) {

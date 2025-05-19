@@ -11,6 +11,7 @@ app.use(cors());
 const homeRoutes = require("./routes/home");
 const teacherRoutes = require("./routes/teacher");
 const studentRoutes = require("./routes/student");
+const Teacher = require("./models/Teacher");
 
 app.use("/", homeRoutes);
 app.use("/teacher", teacherRoutes);

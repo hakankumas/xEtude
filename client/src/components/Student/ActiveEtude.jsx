@@ -68,6 +68,7 @@ function ActiveEtude() {
                                 <table className="table table-bordered table-hover">
                                     <thead>
                                         <tr className="text-center">
+                                            <th className="col">Etüt ID</th>
                                             <th className="col">Ders</th>
                                             <th className="col">Öğretmen</th>
                                             <th className="col">Tarih</th>
@@ -82,6 +83,7 @@ function ActiveEtude() {
                                         const isMine = mine_etudes.some(mine => mine.etude_id === etude.etude_id);
                                         return (
                                         <tr key={index} className="text-center">
+                                            <td>{etude.etude_id}</td>
                                             <td>{etude.lesson_name}</td>
                                             <td>{`${etude.teacher_name} ${etude.teacher_surname}`}</td>
                                             <td>{new Date(etude.etude_date_start).toLocaleDateString('tr-TR')}</td>
