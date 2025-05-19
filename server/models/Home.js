@@ -10,4 +10,23 @@ module.exports = class Home {
             [username, password]
         );
     }
+    static getById(id) {
+        return connection.execute(
+            `
+            SELECT * FROM user WHERE id = ?
+            `,
+            [id]
+        );
+    }
+    static updateById(condition) {
+        const { id, password } = condition;
+        return connection.execute(
+            `
+            UPDATE user
+            SET password = ?
+            WHERE id = ?
+            `,
+            [password, id]
+        );
+    }
 };
