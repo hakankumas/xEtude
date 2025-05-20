@@ -83,6 +83,7 @@ module.exports = class Teacher {
                 id as etude_id, 
                 teacher_id, 
                 date_start,
+                date_end,
                 class_number,
                 private_status,
                 capacity

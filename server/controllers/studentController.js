@@ -6,6 +6,12 @@ exports.active_etudes = async (req, res) => {
     else res.status(404).json({ message: "Not found." });
 };
 
+exports.etude_history = async (req, res) => {
+    const etudes = await Student.etude_history(req.params.user_id);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
 exports.my_etudes = async (req, res) => {
     const etudes = await Student.my_etudes(req.params.student_id);
     if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });

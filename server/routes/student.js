@@ -5,6 +5,7 @@ const router = express.Router();
 const studentController = require("../controllers/studentController");
 
 router.get("/active-etudes/:etude_class", studentController.active_etudes);
+router.get("/etude-history/:user_id", studentController.etude_history);
 router.get("/my-etudes/:student_id", studentController.my_etudes);
 router.post("/enroll-etude", studentController.enroll_etude);
 router.post("/release-etude", studentController.release_etude);

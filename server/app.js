@@ -12,6 +12,7 @@ const homeRoutes = require("./routes/home");
 const teacherRoutes = require("./routes/teacher");
 const studentRoutes = require("./routes/student");
 const Teacher = require("./models/Teacher");
+const Student = require("./models/Student");
 
 app.use("/", homeRoutes);
 app.use("/teacher", teacherRoutes);

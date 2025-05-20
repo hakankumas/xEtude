@@ -39,8 +39,7 @@ function ActiveEtude() {
                                             <th className="col text-center">ID</th>
                                             <th className="col text-center">Sınıf</th>
                                             <th className="col text-center">Tarih</th>
-                                            <th className="col text-center">Başlangıç</th>
-                                            <th className="col text-center">Bitiş</th>
+                                            <th className="col text-center">Saat</th>
                                             <th className="col text-center">Kapasite</th>
                                             <th className="col text-center">Bildirim</th>
                                         </tr>
@@ -51,8 +50,7 @@ function ActiveEtude() {
                                             <td>{etude.etude_id}</td>
                                             <td>{etude.etude_class_number + ". Sınıf"}</td>
                                             <td>{etude.etude_date_start && new Date(etude.etude_date_start).toLocaleDateString('tr-TR')}</td>
-                                            <td>{etude.etude_date_start && new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
-                                            <td>{etude.etude_date_end && new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
+                                            <td>{etude.etude_date_start && new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) }-{new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
                                             <td>{etude.etude_capacity}</td>
                                             <td>
                                                 <button 
