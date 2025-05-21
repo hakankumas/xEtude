@@ -36,7 +36,7 @@ function EtudeHistory() {
                                     <td>{etude.lesson_name}</td>
                                     <td>{etude.teacher_name + " " + etude.teacher_surname}</td>
                                     <td>{etude.etude_private_status == 1 ? "Özel Etüt" : "Toplu Etüt"}</td>
-                                    <td>{new Date(etude.etude_date_start).toLocaleDateString('tr-TR')}</td>
+                                    <td>{new Date(etude.etude_date_start).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
                                     <td>{new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) }-{new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
                                     <td className={etude.etude_enroll_attend == 1 ? "text-success" : "text-danger"}>{etude.etude_enroll_attend == 1 ? "Katıldınız" : "Katılmadınız"}</td>
                                 </tr>

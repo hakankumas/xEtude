@@ -13,10 +13,23 @@ const teacherRoutes = require("./routes/teacher");
 const studentRoutes = require("./routes/student");
 const Teacher = require("./models/Teacher");
 const Student = require("./models/Student");
+const Parent = require("./models/Parent");
 
 app.use("/", homeRoutes);
 app.use("/teacher", teacherRoutes);
 app.use("/student", studentRoutes);
+
+app.get("/parent/children-list/:parent_id", async (req, res) => {
+    const children = await Parent.getAllChildren(req.params.parent_id);
+    if (children[0].length > 0) res.status(200).json({ children: children[0] });
+    else res.status(404).json({ message: "Not found." });
+});
+
+app.get("/parent/student-etudes/:student_id", async (req, res) => {
+    const etudes = await Parent.student_etudes(req.params.student_id);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+});
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);

@@ -49,7 +49,7 @@ function ActiveEtude() {
                                         <tr key={index} className="text-center">
                                             <td>{etude.etude_id}</td>
                                             <td>{etude.etude_class_number + ". Sınıf"}</td>
-                                            <td>{etude.etude_date_start && new Date(etude.etude_date_start).toLocaleDateString('tr-TR')}</td>
+                                            <td>{etude.etude_date_start && new Date(etude.etude_date_start).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
                                             <td>{etude.etude_date_start && new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) }-{new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
                                             <td>{etude.etude_capacity}</td>
                                             <td>

@@ -72,8 +72,7 @@ function ActiveEtude() {
                                             <th className="col">Ders</th>
                                             <th className="col">Öğretmen</th>
                                             <th className="col">Tarih</th>
-                                            <th className="col">Başlangıç Saati</th>
-                                            <th className="col">Bitiş Saati</th>
+                                            <th className="col">Saat</th>
                                             <th className="col">Kapasite</th>
                                             <th className="col">Kayıt</th>
                                         </tr>
@@ -86,9 +85,8 @@ function ActiveEtude() {
                                             <td>{etude.etude_id}</td>
                                             <td>{etude.lesson_name}</td>
                                             <td>{`${etude.teacher_name} ${etude.teacher_surname}`}</td>
-                                            <td>{new Date(etude.etude_date_start).toLocaleDateString('tr-TR')}</td>
-                                            <td>{new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
-                                            <td>{new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
+                                            <td>{new Date(etude.etude_date_start).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
+                                            <td>{new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) }-{new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
                                             <td>{`${etude.number_of_etude_join ? etude.number_of_etude_join : 0}/${etude.etude_capacity}`}</td>
                                             <td>
                                             {isMine ? (
