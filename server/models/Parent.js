@@ -1,28 +1,6 @@
 const connection = require("../database/db");
 
 module.exports = class Parent {
-    static getById(id) {
-        return connection.execute(
-            `
-            SELECT * 
-            FROM user 
-            WHERE 
-                type = 4 AND 
-                id = ?`,
-            [id]
-        );
-    }
-    static getByUsername(username) {
-        return connection.execute(
-            `
-            SELECT * 
-            FROM user 
-            WHERE 
-                type = 4 AND 
-                username = ?`,
-            [username]
-        );
-    }
     static getAll() {
         return connection.execute(
             `
@@ -53,7 +31,6 @@ module.exports = class Parent {
             [parent_id]
         );
     }
-
     static student_etudes(student_id) {
         return connection.execute(
             `
@@ -84,6 +61,29 @@ module.exports = class Parent {
             ORDER BY etude.id DESC
             `,
             [student_id]
+        );
+    }
+    static counts_etude_by_student(student_id) {
+        return connection.execute(
+            `
+            SELECT
+                (SELECT COUNT(*) FROM etude WHERE request_from = ?) AS request_etudes_all,
+                (SELECT COUNT(*) FROM etude WHERE request_from = ? AND private_status = 1) AS request_etudes_private,
+                (SELECT COUNT(*) FROM etude WHERE request_from = ? AND private_status = 0) AS request_etudes_public,
+                (SELECT COUNT(*) FROM etude WHERE request_from = ? AND request = 0) AS accepted_etudes,
+                (SELECT COUNT(*) FROM etude WHERE request_from = ? AND request = 1) AS waiting_etudes,
+                (SELECT COUNT(*) FROM etude_enroll WHERE student_id = ? AND attend = 1) AS attended_etudes,
+                (SELECT COUNT(*) FROM etude_enroll WHERE student_id = ? AND attend = 0) AS not_attended_etudes
+            `,
+            [
+                student_id,
+                student_id,
+                student_id,
+                student_id,
+                student_id,
+                student_id,
+                student_id,
+            ]
         );
     }
 };

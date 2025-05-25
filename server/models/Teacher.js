@@ -70,7 +70,7 @@ module.exports = class Teacher {
             LEFT JOIN user as student ON etude.request_from = student.id
             WHERE 
                 etude.request = 1 AND
-                etude.teacher_id = 17
+                etude.teacher_id = ?
             ORDER BY etude.id DESC
             `,
             [teacher_id]

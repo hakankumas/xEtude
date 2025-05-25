@@ -1,13 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import Graphic1 from "./Graphic1";
-import Graphic2 from "./Graphic2";
 
-function ChildItem() {
+function ChildItem({ student_id }) {
     console.log("ChildItem rendered.");
-    const { student_id } = useParams();
-
     const [etudes, setEtudes] = useState([]);
 
     useEffect(() => {
@@ -19,49 +14,44 @@ function ChildItem() {
     }, [student_id]);
 
     return (
-        <div className="row mt-5">
-            <div className="col-7 px-5">
-                <table className="table table-responsive table-hover">
-                    <thead className="text-center">
-                        <tr>
-                            <th>Etüt ID</th>
-                            <th>Ders</th>
-                            <th>Öğretmen</th>
-                            <th>Etüt Türü</th>
-                            <th>Tarih</th>
-                            <th>Saat</th>
-                            <th>Katılım Durumu</th>
-                        </tr>
-                    </thead>
-                    <tbody className="text-center">
-                        {etudes.length > 0 &&
-                            etudes.map((etude, index) => {
-                                return (
-                                    // prettier-ignore
-                                    <tr key={index}>
-                                        <td>{etude.etude_id}</td>
-                                        <td>{etude.lesson_name}</td>
-                                        <td>{etude.teacher_name + " " + etude.teacher_surname}</td>
-                                        <td>{etude.etude_private_status == 1 ? "Özel Etüt" : "Toplu Etüt"}</td>
-                                        <td>{new Date(etude.etude_date_start).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
-                                        <td>{new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) }-{new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
-                                        <td className={
-                                            etude.etude_status=="Katıldı" 
-                                            ? "text-success" 
-                                            : etude.etude_status=="Katılmadı" 
-                                                ? "text-danger" 
-                                                : "text-primary"
-                                            }>{etude.etude_status}</td>
-                                    </tr>
-                                );
-                            })}
-                    </tbody>
-                </table>
-            </div>
-            <div className="col-5 px-5">
-                <Graphic1 />
-                <Graphic2 />
-            </div>
+        <div className="border rounded-4 p-3">
+            <h1>Etüt Kayıtları</h1>
+            <table className="table table-responsive table-hover">
+                <thead className="text-center">
+                    <tr>
+                        <th>Etüt ID</th>
+                        <th>Ders</th>
+                        <th>Öğretmen</th>
+                        <th>Etüt Türü</th>
+                        <th>Tarih</th>
+                        <th>Saat</th>
+                        <th>Katılım Durumu</th>
+                    </tr>
+                </thead>
+                <tbody className="text-center">
+                    {etudes.length > 0 &&
+                        etudes.map((etude, index) => {
+                            return (
+                                // prettier-ignore
+                                <tr key={index}>
+                                    <td>{etude.etude_id}</td>
+                                    <td>{etude.lesson_name}</td>
+                                    <td>{etude.teacher_name + " " + etude.teacher_surname}</td>
+                                    <td>{etude.etude_private_status == 1 ? "Özel Etüt" : "Toplu Etüt"}</td>
+                                    <td>{new Date(etude.etude_date_start).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
+                                    <td>{new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) }-{new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
+                                    <td className={
+                                        etude.etude_status=="Katıldı" 
+                                        ? "text-success" 
+                                        : etude.etude_status=="Katılmadı" 
+                                            ? "text-danger" 
+                                            : "text-primary"
+                                        }>{etude.etude_status}</td>
+                                </tr>
+                            );
+                        })}
+                </tbody>
+            </table>
         </div>
     );
 }

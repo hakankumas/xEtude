@@ -3,7 +3,7 @@ import Parent from "../pages/Parent";
 import Error from "../pages/Error";
 import SidebarParent from "../components/partials/SidebarParent";
 import Settings from "../components/Settings";
-import ChildItem from "../components/Parent/ChildItem";
+import Child from "../components/Parent/Child";
 
 function ParentRoutes() {
     return (
@@ -20,10 +20,7 @@ function ParentRoutes() {
                     <Routes>
                         <Route path="/" element={<Parent />} />
                         <Route path="/settings" element={<Settings />} />
-                        <Route
-                            path="/child/:student_id"
-                            element={<ChildItem />}
-                        />
+                        <Route path="/child/:student_id" element={<Child />} />
                         <Route path="*" element={<Error />} />
                     </Routes>
                 </div>
