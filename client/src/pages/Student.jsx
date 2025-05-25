@@ -1,6 +1,8 @@
 import ActiveEtude from "../components/Student/ActiveEtude";
 import RequestEtude from "../components/Student/RequestEtude";
 import Notices from "../components/Student/Notices";
+import StudentCards from "../components/Student/StudentCards";
+import EtudeHistory from "../components/Student/EtudeHistory";
 
 function Student() {
     return (
@@ -12,6 +14,10 @@ function Student() {
                 <Notices />
             </div>
             <hr />
+            <div className="mx-5">
+                <StudentCards />
+                <EtudeHistory />
+            </div>
         </div>
     );
 }

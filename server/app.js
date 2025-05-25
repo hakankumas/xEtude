@@ -45,6 +45,12 @@ app.get("/parent/student-enrolled-etudes/:student_id", async (req, res) => {
     else res.status(404).json({ message: "Not found." });
 });
 
+app.get("/student/etude-request-list/:student_id", async (req, res) => {
+    const etudes = await Student.request_status(req.params.student_id);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);
 });

@@ -3,7 +3,7 @@ import Student from "../pages/Student";
 import Error from "../pages/Error";
 import Settings from "../components/Settings";
 import SidebarStudent from "../components/partials/SidebarStudent";
-import EtudeHistory from "../components/Student/EtudeHistory";
+import EtudeRequestList from "../components/Student/EtudeRequestList";
 
 function StudentRoutes() {
     return (
@@ -17,7 +17,7 @@ function StudentRoutes() {
                     <Routes>
                         <Route path="/" element={<Student />} />
                         <Route path="/settings" element={<Settings />} />
-                        <Route path="/etude-history" element={<EtudeHistory />} />
+                        <Route path="/etude-request-list" element={<EtudeRequestList />} />
                         <Route path="*" element={<Error />} />
                     </Routes>
                 </div>

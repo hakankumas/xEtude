@@ -203,4 +203,31 @@ module.exports = class Student {
             [student_id]
         );
     }
+    static request_status(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                etude.id as etude_id,
+                teacher.id as teacher_id,
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname,
+                lesson.name as lesson_name,
+                etude.date_start as etude_date_start,
+                etude.date_end as etude_date_end,
+                etude.private_status as etude_private_status,
+                etude.capacity as etude_capacity,
+                CASE 
+                    WHEN etude.request = 0 THEN 'Onaylandı'
+                    ELSE 'Onay Bekleniyor'
+                END AS request_status
+            FROM etude
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE etude.request_from = ?
+            ORDER BY etude.id DESC
+            `,
+            [student_id]
+        );
+    }
 };

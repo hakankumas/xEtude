@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 function EtudeHistory() {
     console.log("EtudeHistory rendered");
     const student_id = localStorage.getItem("user_id");
+    const { mine_etudes } = useSelector((state) => state.student);
     const [etudes, setEtudes] = useState([]);
 
     useEffect(() => {
@@ -11,12 +13,12 @@ function EtudeHistory() {
             .then((res) => {
                 setEtudes(res.data.etudes);
             });
-    }, []);
+    }, [mine_etudes]);
     return (
-        <div className="col-6 border rounded-4 p-3 m-5">
+        <div className="col border rounded-4 p-3 m-5">
             <h1>Etüt Kayıtları</h1>
             <table className="table table-hover">
-                <thead className="text-center">
+                <thead>
                     <tr>
                         <th>Etüt ID</th>
                         <th>Ders</th>

@@ -17,9 +17,9 @@ function SidebarStudent() {
                 </Link>
                 <Link
                     className="link nav-link text-white d-flex align-items-center"
-                    to="/etude-history"
+                    to="/etude-request-list"
                 >
-                    <MdGroups className="me-2" /> Etüt Geçmişi
+                    <MdGroups className="me-2" /> Etüt Taleplerim
                 </Link>
                 <Link
                     className="link nav-link text-white d-flex align-items-center"
