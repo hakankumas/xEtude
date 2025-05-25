@@ -20,7 +20,7 @@ function Child() {
                     <ChildItem student_id={student_id} />
                 </div>
                 <div className="col-5">
-                    <Graphic1 />
+                    <Graphic1 student_id={student_id} />
                     <Graphic2 />
                 </div>
             </div>

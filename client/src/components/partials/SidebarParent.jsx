@@ -14,7 +14,6 @@ function SidebarParent() {
                 setChildrenList(res.data.children);
             });
     }, []);
-    console.log(childrenList);
     return (
         <div className="bg-dark text-white p-3" style={{ height: "100%" }}>
             <ul className="nav flex-column">

@@ -13,7 +13,8 @@ function EtudeHistory() {
             });
     }, []);
     return (
-        <div className="col-6">
+        <div className="col-6 border rounded-4 p-3 m-5">
+            <h1>Etüt Kayıtları</h1>
             <table className="table table-hover">
                 <thead className="text-center">
                     <tr>
@@ -31,14 +32,20 @@ function EtudeHistory() {
                         etudes.map((etude, index) => {
                             return (
                                 // prettier-ignore
-                                <tr key={index} className="text-center">
+                                <tr key={index}>
                                     <td>{etude.etude_id}</td>
                                     <td>{etude.lesson_name}</td>
                                     <td>{etude.teacher_name + " " + etude.teacher_surname}</td>
                                     <td>{etude.etude_private_status == 1 ? "Özel Etüt" : "Toplu Etüt"}</td>
                                     <td>{new Date(etude.etude_date_start).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</td>
                                     <td>{new Date(etude.etude_date_start).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }) }-{new Date(etude.etude_date_end).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' })}</td>
-                                    <td className={etude.etude_enroll_attend == 1 ? "text-success" : "text-danger"}>{etude.etude_enroll_attend == 1 ? "Katıldınız" : "Katılmadınız"}</td>
+                                    <td className={
+                                        etude.etude_status=="Katıldı" 
+                                        ? "text-success" 
+                                        : etude.etude_status=="Katılmadı" 
+                                            ? "text-danger" 
+                                            : "text-primary"
+                                        }>{etude.etude_status}</td>
                                 </tr>
                             );
                         })}

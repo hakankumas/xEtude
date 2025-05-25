@@ -39,7 +39,7 @@ function Notices() {
                                         <tr key={index} className="text-center">
                                             <td>{notice.etude_notice_etude_id}</td>
                                             <td>{`${notice.teacher_name} ${notice.teacher_surname}`}</td>
-                                            <td>{notice.etude_notice_content}</td>
+                                            <td className="text-start">{notice.etude_notice_content}</td>
                                             <td>
                                                 {new Date(notice.etude_notice_createdAt).toLocaleDateString('tr-TR', {
                                                     day: '2-digit',

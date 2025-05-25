@@ -72,8 +72,9 @@ module.exports = class Parent {
                 (SELECT COUNT(*) FROM etude WHERE request_from = ? AND private_status = 0) AS request_etudes_public,
                 (SELECT COUNT(*) FROM etude WHERE request_from = ? AND request = 0) AS accepted_etudes,
                 (SELECT COUNT(*) FROM etude WHERE request_from = ? AND request = 1) AS waiting_etudes,
+                (SELECT COUNT(*) FROM etude_enroll WHERE student_id = ?) AS enroll_etudes,
                 (SELECT COUNT(*) FROM etude_enroll WHERE student_id = ? AND attend = 1) AS attended_etudes,
-                (SELECT COUNT(*) FROM etude_enroll WHERE student_id = ? AND attend = 0) AS not_attended_etudes
+                (SELECT COUNT(*) FROM etude_enroll LEFT JOIN etude ON etude_enroll.etude_id = etude.id WHERE student_id = ? AND attend = 0 AND etude.date_start < CURDATE()) AS not_attended_etudes
             `,
             [
                 student_id,
@@ -83,7 +84,26 @@ module.exports = class Parent {
                 student_id,
                 student_id,
                 student_id,
+                student_id,
             ]
+        );
+    }
+    static enrolled_etudes_by_lessons(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                lesson.name as lesson_name,
+                COUNT(etude_enroll.id) as count_enroll
+            FROM etude_enroll
+            LEFT JOIN etude ON etude_enroll.etude_id = etude.id
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE etude_enroll.student_id = ?
+            GROUP BY lesson.id
+            ORDER BY count_enroll DESC
+            `,
+            [student_id]
         );
     }
 };

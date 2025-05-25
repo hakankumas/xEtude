@@ -14,7 +14,6 @@ function AnalysisCard({ student_id }) {
                 setEtude(res.data.etudes[0]);
             });
     }, [student_id]);
-    console.log(etude);
     return (
         <div className="d-flex flex-row gap-3">
             <div className="col">
@@ -88,6 +87,21 @@ function AnalysisCard({ student_id }) {
                             style={{ minHeight: "50px" }}
                         >
                             Beklenen Etüt
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div className="col">
+                <div className="card card-inset rounded-4">
+                    <div className="card-body">
+                        <p className="card-text fw-bold h1">
+                            {etude?.enroll_etudes ?? "Yükleniyor..."}
+                        </p>
+                        <h5
+                            className="card-title d-flex align-items-center"
+                            style={{ minHeight: "50px" }}
+                        >
+                            Kaydolunan Etüt
                         </h5>
                     </div>
                 </div>
