@@ -15,7 +15,7 @@ function EtudeHistory() {
             });
     }, [mine_etudes]);
     return (
-        <div className="col border rounded-4 p-3 m-5">
+        <div className="col shadow rounded-4 p-3 my-3">
             <h1>Etüt Kayıtları</h1>
             <table className="table table-hover">
                 <thead>

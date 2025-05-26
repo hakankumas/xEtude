@@ -15,7 +15,7 @@ function Notices() {
     return (
         // prettier-ignore
         <div>
-            <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#notices">Bildirimlerim</button>
+            <button type="button" className="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#notices">Bildirimlerim</button>
             <div className="modal fade" id="notices">
                 <div className="modal-dialog modal-xl">
                     <div className="modal-content">

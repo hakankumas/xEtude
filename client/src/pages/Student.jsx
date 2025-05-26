@@ -7,14 +7,14 @@ import EtudeHistory from "../components/Student/EtudeHistory";
 function Student() {
     return (
         <div>
-            <div className="col-12 mx-5 d-flex flex-row gap-3 align-items-center">
+            <div className="col-12 mx-3 d-flex flex-row gap-3 align-items-center">
                 <h1>Student</h1>
                 <ActiveEtude />
                 <RequestEtude />
                 <Notices />
             </div>
             <hr />
-            <div className="mx-5">
+            <div className="mx-3">
                 <StudentCards />
                 <EtudeHistory />
             </div>

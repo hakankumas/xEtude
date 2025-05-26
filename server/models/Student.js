@@ -230,4 +230,57 @@ module.exports = class Student {
             [student_id]
         );
     }
+    static request_status_by_lesson(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                lesson.name as lesson_name,
+                COUNT(etude.id) as count
+            FROM etude
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE etude.request_from = ?
+            GROUP BY lesson.id
+            `,
+            [student_id]
+        );
+    }
+    static request_status_by_teacher(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                teacher.id as teacher_id,
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname,
+                COUNT(etude.id) as count
+            FROM etude
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE etude.request_from = ?
+            GROUP BY teacher.id
+            `,
+            [student_id]
+        );
+    }
+    static request_status_by_private_status(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                CASE 
+                    WHEN etude.private_status = 1 THEN 'Özel Etüt'
+                    ELSE 'Toplu Etüt'
+                END AS etude_private_status,
+                COUNT(etude.id) as count
+            FROM etude
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE etude.request_from = ?
+            GROUP BY etude.private_status
+            `,
+            [student_id]
+        );
+    }
 };

@@ -88,7 +88,7 @@ function RequestEtude() {
     return (
         // prettier-ignore
         <div>
-            <button type="button" className="btn btn-warning" data-bs-toggle="modal" data-bs-target="#requestEtude">
+            <button type="button" className="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#requestEtude">
                 Etüt Talebi Oluştur
             </button>
             {/* <div className="modal fade" id="requestEtude" tabIndex="-1" aria-labelledby="requestEtudeModalLabel" aria-hidden="true"> */}

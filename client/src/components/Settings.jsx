@@ -41,7 +41,7 @@ function Settings() {
 
     return (
         <div className="col-4 p-3">
-            <form action="" className="border rounded-3 p-3">
+            <form action="" className="shadow rounded-4 p-3">
                 <h2 className="mb-3">Bilgilerim</h2>
                 <div className="mb-3">
                     <label className="form-label">Kullanıcı Adınız</label>
