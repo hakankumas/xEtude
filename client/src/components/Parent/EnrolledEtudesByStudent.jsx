@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function Graphic1({ student_id }) {
+function EnrolledEtudesByStudent({ student_id }) {
     const [etudes, setEtudes] = useState([]);
 
     useEffect(() => {
@@ -45,18 +45,31 @@ function Graphic1({ student_id }) {
                 window.google.visualization.arrayToDataTable(chartData);
 
             const options = {
-                title: "Etüt Kaydı Oluşturulan Dersler",
+                chartArea: {
+                    left: 20,
+                    top: 20,
+                    width: "100%",
+                    height: "100%",
+                },
             };
 
             const chart = new window.google.visualization.PieChart(
-                document.getElementById("piechart")
+                document.getElementById("enrolledEtudesByStudent")
             );
 
             chart.draw(data, options);
         }
     }, [etudes]);
 
-    return <div id="piechart" style={{ width: 900, height: 500 }}></div>;
+    return (
+        <div>
+            <div className="h3 fw-bold">Etüt Kaydı Oluşturulan Dersler</div>
+            <div
+                id="enrolledEtudesByStudent"
+                style={{ width: "100%", height: "250px" }}
+            ></div>
+        </div>
+    );
 }
 
-export default Graphic1;
+export default EnrolledEtudesByStudent;

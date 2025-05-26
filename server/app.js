@@ -78,6 +78,14 @@ app.get(
     }
 );
 
+app.get("/parent/etude-notices-of-students/:student_id", async (req, res) => {
+    const notices = await Parent.etude_notices_of_students(
+        req.params.student_id
+    );
+    if (notices[0].length > 0) res.status(200).json({ notices: notices[0] });
+    else res.status(404).json({ message: "Not found." });
+});
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);
 });

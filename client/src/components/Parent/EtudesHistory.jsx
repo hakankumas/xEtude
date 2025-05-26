@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function ChildItem({ student_id }) {
-    console.log("ChildItem rendered.");
+function EtudesHistory({ student_id }) {
+    console.log("EtudesHistory rendered.");
     const [etudes, setEtudes] = useState([]);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ function ChildItem({ student_id }) {
     }, [student_id]);
 
     return (
-        <div className="border rounded-4 p-3">
+        <div className="shadow rounded-4 p-3">
             <h1>Etüt Kayıtları</h1>
             <table className="table table-responsive table-hover">
                 <thead className="text-center">
@@ -56,4 +56,4 @@ function ChildItem({ student_id }) {
     );
 }
 
-export default ChildItem;
+export default EtudesHistory;

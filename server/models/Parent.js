@@ -106,4 +106,33 @@ module.exports = class Parent {
             [student_id]
         );
     }
+    static etude_notices_of_students(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                etude_notice.id as etude_notice_id,
+                etude.id as etude_id,
+                lesson.id as lesson_id,
+                lesson.name as lesson_name,
+                teacher.id as teacher_id,
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname,
+                etude.date_start as etude_date_start,
+                etude.date_end as etude_date_end,
+                etude.private_status as etude_private_status,
+                etude_notice.notice as etude_notice_content,
+                etude_notice.createdAt as etude_notice_createdAt
+            FROM etude_notice
+            LEFT JOIN etude ON etude_notice.etude_id = etude.id
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE etude_id IN (SELECT etude_enroll.etude_id
+                FROM etude_enroll
+                WHERE etude_enroll.student_id = ?)
+            ORDER BY etude_notice.createdAt DESC
+            `,
+            [student_id]
+        );
+    }
 };
