@@ -1,18 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-function GraphicLesson({ student_id }) {
+function GraphicEnrollPrivateStatus() {
+    const { mine_etudes } = useSelector((state) => state.student);
     const [etudes, setEtudes] = useState([]);
+    const student_id = localStorage.getItem("user_id");
 
     useEffect(() => {
         axios
             .get(
-                `http://localhost:3000/student/etude-requests-by-lesson/${student_id}`
+                `http://localhost:3000/student/etude-enrolled-for-private-status/${student_id}`
             )
             .then((res) => {
                 setEtudes(res.data.etudes);
             });
-    }, []);
+    }, [mine_etudes]);
 
     useEffect(() => {
         if (etudes.length === 0) return;
@@ -35,10 +38,10 @@ function GraphicLesson({ student_id }) {
         }
 
         function drawChart() {
-            const chartData = [["Ders", "Kayıt Sayısı"]];
+            const chartData = [["Etüt Türü", "Kayıt Sayısı"]];
 
             etudes.forEach((etude) => {
-                chartData.push([etude.lesson_name, etude.count]);
+                chartData.push([etude.etude_private_status, etude.count]);
             });
 
             const data =
@@ -54,7 +57,7 @@ function GraphicLesson({ student_id }) {
             };
 
             const chart = new window.google.visualization.PieChart(
-                document.getElementById("graphicLesson")
+                document.getElementById("graphicEnrollPrivateStatus")
             );
 
             chart.draw(data, options);
@@ -63,13 +66,13 @@ function GraphicLesson({ student_id }) {
 
     return (
         <div>
-            <div className="h3 fw-bold">Dersler</div>
+            <div className="h3 fw-bold">Etüt Türleri</div>
             <div
-                id="graphicLesson"
+                id="graphicEnrollPrivateStatus"
                 style={{ width: "100%", height: "250px" }}
             ></div>
         </div>
     );
 }
 
-export default GraphicLesson;
+export default GraphicEnrollPrivateStatus;

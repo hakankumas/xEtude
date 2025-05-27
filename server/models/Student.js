@@ -283,4 +283,85 @@ module.exports = class Student {
             [student_id]
         );
     }
+    static etude_enrolled_for_lesson(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                lesson.name as lesson_name,
+                COUNT(etude.id) as count
+            FROM etude_enroll
+            LEFT JOIN etude ON etude_enroll.etude_id = etude.id
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE student_id = ?
+            GROUP BY lesson.id
+            ORDER BY count DESC
+            `,
+            [student_id]
+        );
+    }
+    static etude_enrolled_for_teacher(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                teacher.id as teacher_id,
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname,
+                COUNT(etude.id) as count
+            FROM etude_enroll
+            LEFT JOIN etude ON etude_enroll.etude_id = etude.id
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE etude_enroll.student_id = ?
+            GROUP BY teacher.id
+            ORDER BY count DESC;
+            `,
+            [student_id]
+        );
+    }
+    static etude_enrolled_for_private_status(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                CASE 
+                    WHEN etude.private_status = 1 THEN 'Özel Etüt'
+                    ELSE 'Toplu Etüt'
+                END AS etude_private_status,
+                COUNT(etude.id) as count
+            FROM etude_enroll
+            LEFT JOIN etude ON etude_enroll.etude_id = etude.id
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE student_id = ?
+            GROUP BY etude.private_status
+            ORDER BY count DESC
+            `,
+            [student_id]
+        );
+    }
+    static etude_enrolled_for_attend_status(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                CASE 
+                    WHEN etude.date_start > CURDATE() THEN 'Henüz Başlamadı'
+                    WHEN etude_enroll.attend = 1 THEN 'Katıldı'
+                    ELSE 'Katılmadı'
+                END AS etude_attend_status,
+                COUNT(etude.id) as count
+            FROM etude_enroll
+            LEFT JOIN etude ON etude_enroll.etude_id = etude.id
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE student_id = 1
+            GROUP BY etude_attend_status
+            ORDER BY count DESC
+            `,
+            [student_id]
+        );
+    }
 };

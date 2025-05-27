@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function GraphicPrivateStatus({ student_id }) {
+function GraphicRequestPrivateStatus({ student_id }) {
     const [etudes, setEtudes] = useState([]);
 
     useEffect(() => {
@@ -54,7 +54,7 @@ function GraphicPrivateStatus({ student_id }) {
             };
 
             const chart = new window.google.visualization.PieChart(
-                document.getElementById("graphicPrivateStatus")
+                document.getElementById("graphicRequestPrivateStatus")
             );
 
             chart.draw(data, options);
@@ -65,11 +65,11 @@ function GraphicPrivateStatus({ student_id }) {
         <div>
             <div className="h3 fw-bold">Etüt Türleri</div>
             <div
-                id="graphicPrivateStatus"
+                id="graphicRequestPrivateStatus"
                 style={{ width: "100%", height: "250px" }}
             ></div>
         </div>
     );
 }
 
-export default GraphicPrivateStatus;
+export default GraphicRequestPrivateStatus;

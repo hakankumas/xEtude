@@ -1,18 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-function GraphicTeacher({ student_id }) {
+function GraphicEnrollLesson() {
+    const { mine_etudes } = useSelector((state) => state.student);
     const [etudes, setEtudes] = useState([]);
+    const student_id = localStorage.getItem("user_id");
 
     useEffect(() => {
         axios
             .get(
-                `http://localhost:3000/student/etude-requests-by-teacher/${student_id}`
+                `http://localhost:3000/student/etude-enrolled-for-lesson/${student_id}`
             )
             .then((res) => {
                 setEtudes(res.data.etudes);
             });
-    }, []);
+    }, [mine_etudes]);
 
     useEffect(() => {
         if (etudes.length === 0) return;
@@ -35,13 +38,10 @@ function GraphicTeacher({ student_id }) {
         }
 
         function drawChart() {
-            const chartData = [["Öğretmen", "Kayıt Sayısı"]];
+            const chartData = [["Ders", "Kayıt Sayısı"]];
 
             etudes.forEach((etude) => {
-                chartData.push([
-                    `${etude.teacher_name} ${etude.teacher_surname}`,
-                    etude.count,
-                ]);
+                chartData.push([etude.lesson_name, etude.count]);
             });
 
             const data =
@@ -57,7 +57,7 @@ function GraphicTeacher({ student_id }) {
             };
 
             const chart = new window.google.visualization.PieChart(
-                document.getElementById("graphicTeacher")
+                document.getElementById("graphicEnrollLesson")
             );
 
             chart.draw(data, options);
@@ -66,13 +66,13 @@ function GraphicTeacher({ student_id }) {
 
     return (
         <div>
-            <div className="h3 fw-bold">Öğretmenler</div>
+            <div className="h3 fw-bold">Dersler</div>
             <div
-                id="graphicTeacher"
+                id="graphicEnrollLesson"
                 style={{ width: "100%", height: "250px" }}
             ></div>
         </div>
     );
 }
 
-export default GraphicTeacher;
+export default GraphicEnrollLesson;

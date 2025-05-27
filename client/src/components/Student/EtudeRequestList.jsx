@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import GraphicLesson from "./GraphicLesson";
-import GraphicTeacher from "./GraphicTeacher";
-import GraphicPrivateStatus from "./GraphicPrivateStatus";
+import GraphicRequestLesson from "./GraphicRequestLesson";
+import GraphicRequestTeacher from "./GraphicRequestTeacher";
+import GraphicRequestPrivateStatus from "./GraphicRequestPrivateStatus";
+import StudentCardsRequest from "./StudentCardsRequest";
+
 function EtudeRequestList() {
     console.log("EtudeRequestList rendered");
     const student_id = localStorage.getItem("user_id");
@@ -19,22 +21,25 @@ function EtudeRequestList() {
     }, []);
     console.log(etudes);
     return (
-        <div>
-            <div className="pt-3 mx-3">
+        <div className="mx-5">
+            <div className="pt-3">
                 <h1 className="h1 fw-bold">Etüt Taleplerim</h1>
             </div>
-            <div className="col-12 d-flex flex-row">
-                <div className="col shadow rounded-4 p-3 mx-3 my-3">
-                    <GraphicLesson student_id={student_id} />
+            <div className="col py-3">
+                <StudentCardsRequest />
+            </div>
+            <div className="col-12 d-flex flex-row py-3">
+                <div className="col shadow rounded-4 p-3 my-3">
+                    <GraphicRequestLesson student_id={student_id} />
                 </div>
-                <div className="col shadow rounded-4 p-3 mx-3 my-3">
-                    <GraphicTeacher student_id={student_id} />
+                <div className="col shadow rounded-4 p-3 my-3">
+                    <GraphicRequestTeacher student_id={student_id} />
                 </div>
-                <div className="col shadow rounded-4 p-3 mx-3 my-3">
-                    <GraphicPrivateStatus student_id={student_id} />
+                <div className="col shadow rounded-4 p-3 my-3">
+                    <GraphicRequestPrivateStatus student_id={student_id} />
                 </div>
             </div>
-            <div className="col shadow rounded-4 p-3 mx-3 my-3">
+            <div className="col shadow rounded-4 p-3 my-3">
                 <div className="h3 fw-bold">Talep Geçmişi</div>
                 <table className="table table-hover">
                     <thead>
