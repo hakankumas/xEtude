@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useCustomSnackBar } from "../../hooks/useCustomSnackBar";
 import { create_etude } from "../../redux/features/teacher/teacherSlice";
+import useModalCloseListener from "../../hooks/useStateEmpty";
 
 const fetchStudents = async () => {
     const res = await axios.get("http://localhost:3000/student/all-student");
@@ -28,29 +29,20 @@ function CreateEtude() {
         private_student: "",
     });
 
-    useEffect(() => {
-        const modal = document.getElementById("createEtude");
-        const handleClose = () => {
-            setFormData({
-                teacher_id: localStorage.getItem("user_id"),
-                date_full: "",
-                date_start: "",
-                date_end: "",
-                class_number: "",
-                private_status: 0,
-                capacity: "",
-                private_student: "",
-            });
-        };
-        modal?.addEventListener("hidden.bs.modal", handleClose);
-        return () => {
-            modal?.removeEventListener("hidden.bs.modal", handleClose);
-        };
-    }, []);
-
     // prettier-ignore
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = () => {
+        if(
+            !formData.date_full ||
+            !formData.date_start ||
+            !formData.date_end
+        ){
+            snackBar_error();
+            return;
+        }
+        if(formData.date_start >= formData.date_end){
+            snackBar_error();
+            return;
+        }
 
         let condition = {
             teacher_id: formData.teacher_id,
@@ -73,6 +65,7 @@ function CreateEtude() {
             snackBar_error();
         }
     };
+
     useEffect(() => {
         setFormData((prev) => ({
             ...prev,
@@ -85,15 +78,28 @@ function CreateEtude() {
         }));
     }, [formData.private_status]);
 
+    useModalCloseListener("createEtude", () => {
+        setFormData({
+            teacher_id: localStorage.getItem("user_id"),
+            date_full: "",
+            date_start: "",
+            date_end: "",
+            class_number: "",
+            private_status: 0,
+            capacity: "",
+            private_student: "",
+        });
+    });
+
     return (
         // prettier-ignore
         <div>
-            <button type="button" className="btn btn-success" data-bs-toggle="modal" data-bs-target="#createEtude">
+            <button type="button" className="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#createEtude">
                 Yeni Bir Etüt Planla
             </button>
             {/* <div className="modal fade" id="createEtude" tabIndex="-1" aria-labelledby="createEtudeModalLabel" aria-hidden="true"> */}
             <div className="modal fade" id="createEtude">
-                <div className="modal-dialog">
+                <div className="modal-dialog modal-md">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5" id="createEtudeModalLabel">

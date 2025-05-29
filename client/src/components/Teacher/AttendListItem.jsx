@@ -55,7 +55,7 @@ function AttendListItem() {
     };
 
     return (
-        <div className="col-6">
+        <div className="col-12 shadow p-3 m-3 rounded-4">
             <table className="table table-hover">
                 <thead className="text-center">
                     <tr>

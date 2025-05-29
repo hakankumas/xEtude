@@ -1,6 +1,3 @@
-import ActiveEtude from "../components/Student/ActiveEtude";
-import RequestEtude from "../components/Student/RequestEtude";
-import Notices from "../components/Student/Notices";
 import StudentCardsEnroll from "../components/Student/StudentCardsEnroll";
 import GraphicEnrollLesson from "../components/Student/GraphicEnrollLesson";
 import GraphicEnrollTeacher from "../components/Student/GraphicEnrollTeacher";
@@ -10,14 +7,7 @@ import EtudeHistory from "../components/Student/EtudeHistory";
 
 function Student() {
     return (
-        <div className="mx-5">
-            <div className="col-12 d-flex flex-row gap-3 align-items-center">
-                <h1>Student</h1>
-                <ActiveEtude />
-                <RequestEtude />
-                <Notices />
-            </div>
-            <hr />
+        <div className="m-4">
             <div>
                 <StudentCardsEnroll />
             </div>

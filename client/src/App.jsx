@@ -5,10 +5,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { is_session } from "./redux/features/auth/authSlice";
-import Logout from "./components/Logout";
 
-// Routes
-import HomeRoutes from "./routes/HomeRoutes";
+import Login from "./pages/Login";
+import Logout from "./components/Logout";
+import Header from "./components/_partials/Header";
 import AdminRoutes from "./routes/AdminRoutes";
 import TeacherRoutes from "./routes/TeacherRoutes";
 import StudentRoutes from "./routes/StudentRoutes";
@@ -34,15 +34,17 @@ function App() {
             case "4":
                 return <ParentRoutes />;
             default:
-                return <HomeRoutes />;
+                break;
         }
     };
 
+    if (location.pathname === "/login") return <Login />;
     if (location.pathname === "/logout") return <Logout />;
 
     return (
         <div className="d-flex flex-column min-vh-100">
-            {session ? routesType() : <HomeRoutes />}
+            <Header />
+            {session && routesType()}
         </div>
     );
 }

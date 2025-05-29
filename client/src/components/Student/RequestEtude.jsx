@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { create_request_etude } from "../../redux/features/student/studentSlice";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useCustomSnackBar } from "../../hooks/useCustomSnackBar";
+import useModalCloseListener from "../../hooks/useStateEmpty";
 
 const fetchTeachers = async () => {
     const res = await axios.get("http://localhost:3000/teacher/all-teacher");
@@ -67,23 +68,16 @@ function RequestEtude() {
         }
     };
 
-    useEffect(() => {
-        const modal = document.getElementById("requestEtude");
-        const handleClose = () => {
-            setFormData({
-                teacher_id: "",
-                private_status: 0,
-                date_full: "",
-                date_start: "",
-                date_end: "",
-            });
-            setRandomDate(false);
-        };
-        modal?.addEventListener("hidden.bs.modal", handleClose);
-        return () => {
-            modal?.removeEventListener("hidden.bs.modal", handleClose);
-        };
-    }, []);
+    useModalCloseListener("requestEtude", () => {
+        setFormData({
+            teacher_id: "",
+            private_status: 0,
+            date_full: "",
+            date_start: "",
+            date_end: "",
+        });
+        setRandomDate(false);
+    });
 
     return (
         // prettier-ignore
@@ -240,6 +234,7 @@ function RequestEtude() {
                                 type="button"
                                 className="btn btn-primary"
                                 onClick={handleSubmit}
+                                data-bs-dismiss="modal"
                             >
                                 Tamam
                             </button>

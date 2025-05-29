@@ -15,7 +15,8 @@ function AttendList() {
             });
     }, []);
     return (
-        <div className="col-6">
+        <div className="col shadow p-3 m-3 rounded-4">
+            <h1>Yoklama Listesi</h1>
             <table className="table table-hover">
                 <thead className="text-center">
                     <tr>

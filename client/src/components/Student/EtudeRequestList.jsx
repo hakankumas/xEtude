@@ -21,8 +21,8 @@ function EtudeRequestList() {
     }, []);
     console.log(etudes);
     return (
-        <div className="mx-5">
-            <div className="pt-3">
+        <div className="m-4">
+            <div>
                 <h1 className="h1 fw-bold">Etüt Taleplerim</h1>
             </div>
             <div className="col py-3">

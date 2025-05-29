@@ -18,7 +18,7 @@ function ActiveEtude() {
         // prettier-ignore
         <div>
 
-            <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activeEtude">
+            <button type="button" className="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#activeEtude">
                 Aktif Etütlerim
             </button>
 

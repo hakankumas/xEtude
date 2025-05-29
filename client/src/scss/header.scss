@@ -1,10 +1,29 @@
-.link {
-    margin: 0px 10px;
-    text-decoration: none;
-    color: white;
-}
 .home {
     font-size: 25px;
     font-style: italic;
     font-weight: bold;
+}
+
+.link {
+    margin: 0px 5px;
+    text-decoration: none;
+    color: white;
+    &:hover {
+        color: rgb(30, 198, 196) !important;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+.active_hover {
+    color: rgb(30, 198, 196) !important;
+}
+
+.logout {
+    color: rgb(120, 120, 120) !important;
+    text-decoration: none;
+    margin: 0px 5px;
+    &:hover {
+        color: red !important;
+        transition: all 0.4s ease-in-out;
+    }
 }
