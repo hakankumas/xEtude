@@ -200,4 +200,53 @@ module.exports = class Teacher {
             [date_start, date_end, capacity, etude_id]
         );
     }
+    static etudes_counts(teacher_id) {
+        return connection.execute(
+            `
+            SELECT
+                (SELECT COUNT(*) as count FROM etude WHERE teacher_id = ? GROUP BY teacher_id) as etude_count,
+                (SELECT COUNT(*) FROM etude WHERE private_status = 1 AND teacher_id = ? GROUP BY private_status) as ps_private,
+                (SELECT COUNT(*) FROM etude WHERE private_status = 0 AND teacher_id = ? GROUP BY private_status) as ps_public,
+                (SELECT COUNT(*) as count FROM etude WHERE request = 0 AND teacher_id = ? GROUP BY request) as req_accept,
+                (SELECT COUNT(*) as count FROM etude WHERE request = 1 AND teacher_id = ? GROUP BY request) as req_wait
+            `,
+            [teacher_id, teacher_id, teacher_id, teacher_id, teacher_id]
+        );
+    }
+
+    static etudes_by_class_number(teacher_id) {
+        return connection.execute(
+            `
+            SELECT 
+                CASE 
+                    WHEN class_number = 1 THEN '1. Sınıf'
+                    WHEN class_number = 2 THEN '2. Sınıf'
+                    WHEN class_number = 3 THEN '3. Sınıf'
+                    WHEN class_number = 4 THEN '4. Sınıf'
+                END AS class_number_rate,
+                COUNT(*) as count
+            FROM etude
+            WHERE teacher_id = ?
+            GROUP BY class_number
+            ORDER BY count DESC
+            `,
+            [teacher_id]
+        );
+    }
+    static etudes_by_students(teacher_id) {
+        return connection.execute(
+            `
+            SELECT 
+                student.name as student_name,
+                student.surname as student_surname,
+                COUNT(*) as count
+            FROM etude
+            LEFT JOIN user as student ON etude.request_from = student.id
+            WHERE teacher_id = ?
+            GROUP BY request_from
+            ORDER BY count DESC
+            `,
+            [teacher_id]
+        );
+    }
 };
