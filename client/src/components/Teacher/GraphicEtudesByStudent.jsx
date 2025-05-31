@@ -6,7 +6,7 @@ function GraphicEtudesByStudent({ teacher_id }) {
     useEffect(() => {
         axios
             .get(
-                `http://localhost:3000/teacher/etudes-by-students/${teacher_id}`
+                `http://localhost:3000/teacher/request-etudes-by-students/${teacher_id}`
             )
             .then((res) => {
                 setEtudes(res.data.etudes);

@@ -233,7 +233,7 @@ module.exports = class Teacher {
             [teacher_id]
         );
     }
-    static etudes_by_students(teacher_id) {
+    static request_etudes_by_students(teacher_id) {
         return connection.execute(
             `
             SELECT 
@@ -245,6 +245,24 @@ module.exports = class Teacher {
             WHERE teacher_id = ?
             GROUP BY request_from
             ORDER BY count DESC
+            `,
+            [teacher_id]
+        );
+    }
+    static etudes_attend_status(teacher_id) {
+        return connection.execute(
+            `
+            SELECT 
+                CASE 
+                    WHEN etude_enroll.attend = 1 THEN 'Katıldı'
+                    WHEN etude_enroll.attend = 0 THEN 'Katılmadı'
+                END as attend_status,
+                COUNT(*) as count
+            FROM etude_enroll
+            LEFT JOIN etude ON etude_enroll.etude_id = etude.id
+            WHERE teacher_id = ?
+            GROUP BY etude_enroll.attend
+            ORDER BY attend_status ASC
             `,
             [teacher_id]
         );

@@ -147,3 +147,33 @@ exports.get_notices = async (req, res) => {
     if (notices[0].length > 0) res.status(200).json({ notices: notices[0] });
     else res.status(404).json({ message: "Not found." });
 };
+
+exports.etudes_counts = async (req, res) => {
+    const etudes = await Teacher.etudes_counts(req.params.teacher_id);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+exports.etudes_by_class_number = async (req, res) => {
+    const etudes = await Teacher.etudes_by_class_number(req.params.teacher_id);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+exports.request_etudes_by_students = async (req, res) => {
+    const etudes = await Teacher.request_etudes_by_students(
+        req.params.teacher_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+exports.etudes_attend_status = async (req, res) => {
+    const etudes = await Teacher.etudes_attend_status(req.params.teacher_id);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+exports.enrolled_etudes_by_students = async (req, res) => {
+    const etudes = await Teacher.enrolled_etudes_by_students(
+        req.params.teacher_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
