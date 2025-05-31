@@ -89,3 +89,65 @@ exports.get_notices = async (req, res) => {
         res.status(500).json({ message: "Something went wrong." });
     }
 };
+
+exports.etude_request_list = async (req, res) => {
+    const etudes = await Student.request_status(req.params.student_id);
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.etude_requests_by_lesson = async (req, res) => {
+    const etudes = await Student.request_status_by_lesson(
+        req.params.student_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.etude_requests_by_teacher = async (req, res) => {
+    const etudes = await Student.request_status_by_teacher(
+        req.params.student_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.etude_requests_by_private_status = async (req, res) => {
+    const etudes = await Student.request_status_by_private_status(
+        req.params.student_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.etude_enrolled_for_lesson = async (req, res) => {
+    const etudes = await Student.etude_enrolled_for_lesson(
+        req.params.student_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.etude_enrolled_for_teacher = async (req, res) => {
+    const etudes = await Student.etude_enrolled_for_teacher(
+        req.params.student_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.etude_enrolled_for_private_status = async (req, res) => {
+    const etudes = await Student.etude_enrolled_for_private_status(
+        req.params.student_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.etude_enrolled_for_attend_status = async (req, res) => {
+    const etudes = await Student.etude_enrolled_for_attend_status(
+        req.params.student_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};

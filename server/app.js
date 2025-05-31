@@ -11,6 +11,8 @@ app.use(cors());
 const homeRoutes = require("./routes/home");
 const teacherRoutes = require("./routes/teacher");
 const studentRoutes = require("./routes/student");
+const parentRoutes = require("./routes/parent");
+
 const Teacher = require("./models/Teacher");
 const Student = require("./models/Student");
 const Parent = require("./models/Parent");
@@ -18,111 +20,8 @@ const Parent = require("./models/Parent");
 app.use("/", homeRoutes);
 app.use("/teacher", teacherRoutes);
 app.use("/student", studentRoutes);
+app.use("/parent", parentRoutes);
 
-app.get("/parent/children-list/:parent_id", async (req, res) => {
-    const children = await Parent.getAllChildren(req.params.parent_id);
-    if (children[0].length > 0) res.status(200).json({ children: children[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get("/parent/student-etudes/:student_id", async (req, res) => {
-    const etudes = await Parent.student_etudes(req.params.student_id);
-    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get("/parent/student-etudes-counts/:student_id", async (req, res) => {
-    const etudes = await Parent.counts_etude_by_student(req.params.student_id);
-    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get("/parent/student-enrolled-etudes/:student_id", async (req, res) => {
-    const etudes = await Parent.enrolled_etudes_by_lessons(
-        req.params.student_id
-    );
-    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get("/student/etude-request-list/:student_id", async (req, res) => {
-    const etudes = await Student.request_status(req.params.student_id);
-    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get("/student/etude-requests-by-lesson/:student_id", async (req, res) => {
-    const etudes = await Student.request_status_by_lesson(
-        req.params.student_id
-    );
-    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get("/student/etude-requests-by-teacher/:student_id", async (req, res) => {
-    const etudes = await Student.request_status_by_teacher(
-        req.params.student_id
-    );
-    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get(
-    "/student/etude-requests-by-private-status/:student_id",
-    async (req, res) => {
-        const etudes = await Student.request_status_by_private_status(
-            req.params.student_id
-        );
-        if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-        else res.status(404).json({ message: "Not found." });
-    }
-);
-
-app.get("/parent/etude-notices-of-students/:student_id", async (req, res) => {
-    const notices = await Parent.etude_notices_of_students(
-        req.params.student_id
-    );
-    if (notices[0].length > 0) res.status(200).json({ notices: notices[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get("/student/etude-enrolled-for-lesson/:student_id", async (req, res) => {
-    const etudes = await Student.etude_enrolled_for_lesson(
-        req.params.student_id
-    );
-    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get("/student/etude-enrolled-for-teacher/:student_id", async (req, res) => {
-    const etudes = await Student.etude_enrolled_for_teacher(
-        req.params.student_id
-    );
-    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-    else res.status(404).json({ message: "Not found." });
-});
-
-app.get(
-    "/student/etude-enrolled-for-private-status/:student_id",
-    async (req, res) => {
-        const etudes = await Student.etude_enrolled_for_private_status(
-            req.params.student_id
-        );
-        if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-        else res.status(404).json({ message: "Not found." });
-    }
-);
-
-app.get(
-    "/student/etude-enrolled-for-attend-status/:student_id",
-    async (req, res) => {
-        const etudes = await Student.etude_enrolled_for_attend_status(
-            req.params.student_id
-        );
-        if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
-        else res.status(404).json({ message: "Not found." });
-    }
-);
 app.listen(process.env.PORT, () => {
     console.log(`Server is running at ${process.env.SERVER_URL}`);
 });
