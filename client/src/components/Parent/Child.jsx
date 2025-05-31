@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom";
-import AnalysisCard from "./AnalysisCard";
+import ParentCards from "./ParentCards";
 import EtudesHistory from "./EtudesHistory";
-import EnrolledEtudesByStudent from "./EnrolledEtudesByStudent";
+import EnrolledEtudesByLesson from "./EnrolledEtudesByLesson";
+import EnrolledEtudesByTeacher from "./EnrolledEtudesByTeacher";
 import MessagesForStudent from "./MessagesForStudent";
 
 function Child() {
@@ -11,11 +12,14 @@ function Child() {
     return (
         <div className="mt-3">
             <div className="px-3">
-                <AnalysisCard student_id={student_id} />
+                <ParentCards student_id={student_id} />
             </div>
             <div className="px-3 py-3 d-flex flex-row gap-4">
-                <div className="col-4 shadow rounded-4 p-3">
-                    <EnrolledEtudesByStudent student_id={student_id} />
+                <div className="col-3 shadow rounded-4 p-3">
+                    <EnrolledEtudesByLesson student_id={student_id} />
+                </div>
+                <div className="col-3 shadow rounded-4 p-3">
+                    <EnrolledEtudesByTeacher student_id={student_id} />
                 </div>
                 <div className="col shadow rounded-4 p-3">
                     <MessagesForStudent student_id={student_id} />

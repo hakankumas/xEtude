@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FaUserCheck, FaUserPlus, FaUserTimes } from "react-icons/fa";
 
-function StudentCards() {
-    console.log("StudentCards rendered.");
+function StudentCardsEnroll() {
+    console.log("StudentCardsEnroll rendered.");
     const student_id = localStorage.getItem("user_id");
     const { mine_etudes } = useSelector((state) => state.student);
     const [etude, setEtude] = useState();
@@ -102,4 +102,4 @@ function StudentCards() {
     );
 }
 
-export default StudentCards;
+export default StudentCardsEnroll;

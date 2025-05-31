@@ -8,16 +8,6 @@
     box-sizing: border-box;
 }
 
-/* Chrome, Edge ve Safari */
-::-webkit-scrollbar {
-    display: none;
-}
-/* Firefox */
-html {
-    scrollbar-width: none;
-}
-/* Other */
-// html,
-// body {
-//     overflow: hidden;
-// }
+// ::-webkit-scrollbar { display: none;}
+// html { scrollbar-width: none;}
+// html, body { overflow: hidden;}

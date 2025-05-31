@@ -18,8 +18,16 @@ exports.student_etudes_counts = async (req, res) => {
     else res.status(404).json({ message: "Not found." });
 };
 
-exports.student_enrolled_etudes = async (req, res) => {
+exports.student_enrolled_etudes_by_lesson = async (req, res) => {
     const etudes = await Parent.enrolled_etudes_by_lessons(
+        req.params.student_id
+    );
+    if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.student_enrolled_etudes_by_teacher = async (req, res) => {
+    const etudes = await Parent.enrolled_etudes_by_teacher(
         req.params.student_id
     );
     if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });

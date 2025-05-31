@@ -106,6 +106,25 @@ module.exports = class Parent {
             [student_id]
         );
     }
+    static enrolled_etudes_by_teacher(student_id) {
+        return connection.execute(
+            `
+            SELECT 
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname,
+                COUNT(etude_enroll.id) as count_enroll
+            FROM etude_enroll
+            LEFT JOIN etude ON etude_enroll.etude_id = etude.id
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            WHERE etude_enroll.student_id = ?
+            GROUP BY teacher.id
+            ORDER BY count_enroll DESC
+            `,
+            [student_id]
+        );
+    }
     static etude_notices_of_students(student_id) {
         return connection.execute(
             `

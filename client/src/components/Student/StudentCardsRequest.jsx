@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { FaCheck, FaHourglassHalf, FaPlus } from "react-icons/fa";
 import { IoIosPeople, IoIosPerson } from "react-icons/io";
 
-function StudentCards() {
-    console.log("StudentCards rendered.");
+function StudentCardsRequest() {
+    console.log("StudentCardsRequest rendered.");
     const student_id = localStorage.getItem("user_id");
     const { mine_etudes } = useSelector((state) => state.student);
     const [etude, setEtude] = useState();
@@ -157,4 +157,4 @@ function StudentCards() {
     );
 }
 
-export default StudentCards;
+export default StudentCardsRequest;

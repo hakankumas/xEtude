@@ -14,11 +14,14 @@ function MessagesForStudent({ student_id }) {
             });
     }, [student_id]);
     return (
-        <div>
+        <div className="overflow-y-auto" style={{ maxHeight: "40vh" }}>
             <div className="h3 fw-bold mb-4 d-flex justify-content-center">
                 Öğrenciye Gelen Bildirimler
             </div>
-            <table className="table table-hover">
+            <table
+                className="table table-hover overflow-y-auto"
+                style={{ maxHeight: "40vh" }}
+            >
                 <thead>
                     <tr className="text-center">
                         <th style={{ width: "10%" }}>Etüt ID</th>

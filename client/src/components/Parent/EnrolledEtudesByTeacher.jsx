@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function EnrolledEtudesByStudent({ student_id }) {
+function EnrolledEtudesByTeacher({ student_id }) {
     const [etudes, setEtudes] = useState([]);
 
     useEffect(() => {
         axios
             .get(
-                `http://localhost:3000/parent/student-enrolled-etudes/${student_id}`
+                `http://localhost:3000/parent/student-enrolled-etudes-by-teacher/${student_id}`
             )
             .then((res) => {
                 setEtudes(res.data.etudes);
@@ -35,10 +35,13 @@ function EnrolledEtudesByStudent({ student_id }) {
         }
 
         function drawChart() {
-            const chartData = [["Ders", "Kayıt Sayısı"]];
+            const chartData = [["Öğretmen", "Kayıt Sayısı"]];
 
             etudes.forEach((etude) => {
-                chartData.push([etude.lesson_name, etude.count_enroll]);
+                chartData.push([
+                    `${etude.teacher_name} ${etude.teacher_surname}`,
+                    etude.count_enroll,
+                ]);
             });
 
             const data =
@@ -54,7 +57,7 @@ function EnrolledEtudesByStudent({ student_id }) {
             };
 
             const chart = new window.google.visualization.PieChart(
-                document.getElementById("enrolledEtudesByStudent")
+                document.getElementById("enrolledEtudesByTeacher")
             );
 
             chart.draw(data, options);
@@ -63,13 +66,13 @@ function EnrolledEtudesByStudent({ student_id }) {
 
     return (
         <div>
-            <div className="h3 fw-bold">Etüt Kaydı Oluşturulan Dersler</div>
+            <div className="h3 fw-bold">Öğretmenlere Göre Kayıt Sayısı</div>
             <div
-                id="enrolledEtudesByStudent"
+                id="enrolledEtudesByTeacher"
                 style={{ width: "100%", height: "250px" }}
             ></div>
         </div>
     );
 }
 
-export default EnrolledEtudesByStudent;
+export default EnrolledEtudesByTeacher;
