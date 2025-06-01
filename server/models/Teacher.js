@@ -267,4 +267,14 @@ module.exports = class Teacher {
             [teacher_id]
         );
     }
+    static insert_notice_for_parent(condition) {
+        const { teacher_id, parent_id, content } = condition;
+        return connection.execute(
+            `
+            INSERT INTO notice_teacher (teacher_id, parent_id, content)
+            VALUES (?, ?, ?)
+            `,
+            [teacher_id, parent_id, content]
+        );
+    }
 };

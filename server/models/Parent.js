@@ -154,4 +154,38 @@ module.exports = class Parent {
             [student_id]
         );
     }
+    static notices_by_admin(parent_id) {
+        return connection.execute(
+            `
+            SELECT 
+                notice_admin.id as notice_id,
+                admin.name as admin_name,
+                admin.surname as admin_surname,
+                notice_admin.content as content,
+                notice_admin.createdAt as createdAt
+            FROM notice_admin
+            LEFT JOIN user as admin ON notice_admin.admin_id = admin.id
+            WHERE parent_id = ?
+            ORDER BY createdAt DESC
+            `,
+            [parent_id]
+        );
+    }
+    static notices_by_teacher(parent_id) {
+        return connection.execute(
+            `
+            SELECT 
+                notice_teacher.id as notice_id,
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname,
+                notice_teacher.content as content,
+                notice_teacher.createdAt as createdAt
+            FROM notice_teacher
+            LEFT JOIN user as teacher ON notice_teacher.teacher_id = teacher.id
+            WHERE parent_id = ?
+            ORDER BY createdAt DESC
+            `,
+            [parent_id]
+        );
+    }
 };

@@ -13,6 +13,7 @@ import Student_Notices from "../Student/Notices";
 import Teacher_ActiveEtude from "../Teacher/ActiveEtude";
 import Teacher_RequestEtude from "../Teacher/RequestEtude";
 import Teacher_CreateEtude from "../Teacher/CreateEtude";
+import Teacher_SendNoticeToParent from "../Teacher/SendNoticeToParent";
 
 // Common Files
 import Settings from "../Settings";
@@ -81,6 +82,9 @@ function Header() {
                         </div>
                         <div className="text-dark">
                             <Teacher_CreateEtude />
+                        </div>
+                        <div className="text-dark">
+                            <Teacher_SendNoticeToParent />
                         </div>
                     </>
                 )}

@@ -18,14 +18,14 @@ router.post("/update-request-etude", teacherController.update_request_etude);
 router.post("/create-notice", teacherController.create_notice);
 router.get("/get-notices/:etude_id", teacherController.get_notices);
 // prettier-ignore
-router.get("/teacher/etudes-counts/:teacher_id", teacherController.etudes_counts);
+router.get("/etudes-counts/:teacher_id", teacherController.etudes_counts);
 // prettier-ignore
-router.get("/teacher/etudes-by-class-number/:teacher_id", teacherController.etudes_by_class_number);
+router.get("/etudes-by-class-number/:teacher_id", teacherController.etudes_by_class_number);
 // prettier-ignore
-router.get("/teacher/request-etudes-by-students/:teacher_id", teacherController.request_etudes_by_students);
+router.get("/request-etudes-by-students/:teacher_id", teacherController.request_etudes_by_students);
 // prettier-ignore
-router.get("/teacher/etudes-attend-status/:teacher_id", teacherController.etudes_attend_status);
+router.get("/etudes-attend-status/:teacher_id", teacherController.etudes_attend_status);
 // prettier-ignore
-router.get("/teacher/enrolled-etudes-by-students/:teacher_id", teacherController.enrolled_etudes_by_students);
+router.get("/enrolled-etudes-by-students/:teacher_id", teacherController.enrolled_etudes_by_students);
 
 module.exports = router;

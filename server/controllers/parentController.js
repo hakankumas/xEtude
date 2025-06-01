@@ -1,5 +1,11 @@
 const Parent = require("../models/Parent");
 
+exports.getAll = async (req, res) => {
+    const parents = await Parent.getAll();
+    if (parents[0].length > 0) res.status(200).json({ parents: parents[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
 exports.children_list = async (req, res) => {
     const children = await Parent.getAllChildren(req.params.parent_id);
     if (children[0].length > 0) res.status(200).json({ children: children[0] });

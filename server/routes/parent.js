@@ -4,6 +4,7 @@ const router = express.Router();
 // Controllers
 const parentController = require("../controllers/parentController");
 
+router.get("/getall", parentController.getAll);
 router.get("/children-list/:parent_id", parentController.children_list);
 router.get("/student-etudes/:student_id", parentController.student_etudes);
 // prettier-ignore
