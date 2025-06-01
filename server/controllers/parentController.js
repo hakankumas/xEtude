@@ -47,3 +47,21 @@ exports.etude_notices_of_students = async (req, res) => {
     if (notices[0].length > 0) res.status(200).json({ notices: notices[0] });
     else res.status(404).json({ message: "Not found." });
 };
+
+exports.notices_by_admin = async (req, res) => {
+    const notices = await Parent.notices_by_admin(req.params.parent_id);
+    if (notices[0].length > 0) res.status(200).json({ notices: notices[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.notices_by_teacher = async (req, res) => {
+    const notices = await Parent.notices_by_teacher(req.params.parent_id);
+    if (notices[0].length > 0) res.status(200).json({ notices: notices[0] });
+    else res.status(404).json({ message: "Not found." });
+};
+
+exports.all_parents = async (req, res) => {
+    const parents = await Parent.getAllParents();
+    if (parents[0].length > 0) res.status(200).json({ parents: parents[0] });
+    else res.status(404).json({ message: "Not found." });
+};

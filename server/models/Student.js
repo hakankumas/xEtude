@@ -18,7 +18,7 @@ module.exports = class Student {
             SELECT * 
             FROM user 
             WHERE type = 3
-            ORDER BY name ASC, surname ASC`
+            ORDER BY class_number ASC, name ASC, surname ASC`
         );
     }
     static active_etudes(etude_class) {
@@ -357,7 +357,7 @@ module.exports = class Student {
             LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
             LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
             LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
-            WHERE student_id = 1
+            WHERE student_id = ?
             GROUP BY etude_attend_status
             ORDER BY count DESC
             `,

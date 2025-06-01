@@ -177,3 +177,25 @@ exports.enrolled_etudes_by_students = async (req, res) => {
     if (etudes[0].length > 0) res.status(200).json({ etudes: etudes[0] });
     else res.status(404).json({ message: "Not found." });
 };
+
+exports.create_notice_for_parent = async (req, res) => {
+    try {
+        const result = await Teacher.insert_notice_for_parent(req.body);
+        if (result[0].affectedRows > 0) {
+            res.status(200).json({
+                message: "Notice created successfully.",
+            });
+        } else {
+            res.status(404).json({ message: "Not found." });
+        }
+    } catch (err) {
+        console.error("Create request etude error:", err);
+        res.status(500).json({ message: "Something went wrong." });
+    }
+};
+
+exports.getAll = async (req, res) => {
+    const teachers = await Teacher.getAllTeachers();
+    if (teachers[0].length > 0) res.status(200).json({ teachers: teachers[0] });
+    else res.status(404).json({ message: "Not found." });
+};

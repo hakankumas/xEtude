@@ -24,4 +24,52 @@ module.exports = class Administrator {
             [admin_id, parent_id, content]
         );
     }
+    static count_etude_by_lessons() {
+        return connection.execute(
+            `
+            SELECT
+                lesson.id as lesson_id,
+                lesson.name as lesson_name,
+                COUNT(etude.id) as count
+            FROM etude
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson_teacher.lesson_id = lesson.id
+            GROUP BY lesson.id
+            ORDER BY count DESC
+            `
+        );
+    }
+    static count_etude_by_teachers() {
+        return connection.execute(
+            `
+            SELECT
+                teacher.id as teacher_id,
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname,
+                COUNT(etude.id) as count
+            FROM etude
+            LEFT JOIN user as teacher ON etude.teacher_id = teacher.id
+            GROUP BY teacher_id
+            ORDER BY count DESC
+            `
+        );
+    }
+    static count_etude_by_class_number() {
+        return connection.execute(
+            `
+            SELECT 
+                CASE 
+                    WHEN class_number = 1 THEN '1. Sınıf'
+                    WHEN class_number = 2 THEN '2. Sınıf'
+                    WHEN class_number = 3 THEN '3. Sınıf'
+                    WHEN class_number = 4 THEN '4. Sınıf'
+                END AS class_number_rate,
+                COUNT(*) as count
+            FROM etude
+            GROUP BY class_number
+            ORDER BY count DESC
+            `
+        );
+    }
 };

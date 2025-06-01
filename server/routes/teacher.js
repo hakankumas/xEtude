@@ -27,5 +27,9 @@ router.get("/request-etudes-by-students/:teacher_id", teacherController.request_
 router.get("/etudes-attend-status/:teacher_id", teacherController.etudes_attend_status);
 // prettier-ignore
 router.get("/enrolled-etudes-by-students/:teacher_id", teacherController.enrolled_etudes_by_students);
+// prettier-ignore
+router.post("/create-notice-for-parent", teacherController.create_notice_for_parent);
+// prettier-ignore
+router.get("/getall", teacherController.getAll);
 
 module.exports = router;

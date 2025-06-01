@@ -15,5 +15,11 @@ router.get("/student-enrolled-etudes-by-lesson/:student_id", parentController.st
 router.get("/student-enrolled-etudes-by-teacher/:student_id", parentController.student_enrolled_etudes_by_teacher);
 // prettier-ignore
 router.get("/etude-notices-of-students/:student_id", parentController.etude_notices_of_students);
+// prettier-ignore
+router.get("/notices-by-admin/:parent_id", parentController.notices_by_admin);
+// prettier-ignore
+router.get("/notices-by-teacher/:parent_id", parentController.notices_by_teacher);
+// prettier-ignore
+router.get("/all-parents", parentController.all_parents);
 
 module.exports = router;

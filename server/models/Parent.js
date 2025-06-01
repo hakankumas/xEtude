@@ -9,6 +9,21 @@ module.exports = class Parent {
             WHERE type = 4`
         );
     }
+    static getAllParents() {
+        return connection.execute(
+            `
+            SELECT 
+                parent.name as parent_name,
+                parent.surname as parent_surname,
+                student.name as student_name,
+                student.surname as student_surname
+            FROM family
+            LEFT JOIN user as student ON family.student_id = student.id
+            LEFT JOIN user as parent ON family.parent_id = parent.id
+            ORDER BY parent.name ASC, parent.surname ASC, student.name ASC
+            `
+        );
+    }
     static getAllChildren(parent_id) {
         return connection.execute(
             `

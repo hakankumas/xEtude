@@ -21,6 +21,22 @@ module.exports = class Teacher {
             ORDER BY name ASC, surname ASC`
         );
     }
+    static getAllTeachers() {
+        return connection.execute(
+            `
+            SELECT 
+                teacher.id as teacher_id,
+                lesson.name as lesson_name,
+                teacher.name as teacher_name,
+                teacher.surname as teacher_surname
+            FROM user as teacher
+            LEFT JOIN lesson_teacher ON teacher.id = lesson_teacher.teacher_id
+            LEFT JOIN lesson ON lesson.id = lesson_teacher.lesson_id
+            WHERE teacher.type = 2
+            ORDER BY lesson.name ASC
+            `
+        );
+    }
     static active_etudes_getByTeacherId(teacher_id) {
         return connection.execute(
             `

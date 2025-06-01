@@ -4,16 +4,22 @@ import axios from "axios";
 import { FaHome, FaPowerOff, FaUser } from "react-icons/fa";
 import { MdGroups } from "react-icons/md";
 
-// Student
-import Student_ActiveEtude from "../Student/ActiveEtude";
-import Student_RequestEtude from "../Student/RequestEtude";
-import Student_Notices from "../Student/Notices";
+// Admin
+import Admin_SendNoticeToParent from "../Admin/SendNoticeToParent";
+import Admin_StudentList from "../Admin/StudentList";
+import Admin_TeacherList from "../Admin/TeacherList";
+import Admin_ParentList from "../Admin/ParentList";
 
 // Teacher
 import Teacher_ActiveEtude from "../Teacher/ActiveEtude";
 import Teacher_RequestEtude from "../Teacher/RequestEtude";
 import Teacher_CreateEtude from "../Teacher/CreateEtude";
 import Teacher_SendNoticeToParent from "../Teacher/SendNoticeToParent";
+
+// Student
+import Student_ActiveEtude from "../Student/ActiveEtude";
+import Student_RequestEtude from "../Student/RequestEtude";
+import Student_Notices from "../Student/Notices";
 
 // Common Files
 import Settings from "../Settings";
@@ -60,6 +66,23 @@ function Header() {
                 >
                     <FaHome className="me-2" /> Ana Sayfa
                 </Link>
+                {/* Admin */}
+                {user_type == 1 && (
+                    <>
+                        <div className="text-dark">
+                            <Admin_TeacherList />
+                        </div>
+                        <div className="text-dark">
+                            <Admin_StudentList />
+                        </div>
+                        <div className="text-dark">
+                            <Admin_ParentList />
+                        </div>
+                        <div className="text-dark">
+                            <Admin_SendNoticeToParent />
+                        </div>
+                    </>
+                )}
                 {/* Teacher */}
                 {user_type == 2 && (
                     <>
