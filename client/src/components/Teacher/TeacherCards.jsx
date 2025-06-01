@@ -28,7 +28,7 @@ function TeacherCards({ teacher_id }) {
                                     }}
                                 />
                             </span>
-                            <span>{etude?.etude_count ?? "Yükleniyor..."}</span>
+                            <span>{etude?.etude_count ?? "0"}</span>
                         </p>
                         <h5
                             className="card-title d-flex align-items-center"
@@ -52,7 +52,7 @@ function TeacherCards({ teacher_id }) {
                                     }}
                                 />
                             </span>
-                            <span>{etude?.ps_private ?? "Yükleniyor..."}</span>
+                            <span>{etude?.ps_private ?? "0"}</span>
                         </p>
                         <h5
                             className="card-title d-flex align-items-center"
@@ -76,7 +76,7 @@ function TeacherCards({ teacher_id }) {
                                     }}
                                 />
                             </span>
-                            <span>{etude?.ps_public ?? "Yükleniyor..."}</span>
+                            <span>{etude?.ps_public ?? "0"}</span>
                         </p>
                         <h5
                             className="card-title d-flex align-items-center"
@@ -100,7 +100,7 @@ function TeacherCards({ teacher_id }) {
                                     }}
                                 />
                             </span>
-                            <span>{etude?.req_accept ?? "Yükleniyor..."}</span>
+                            <span>{etude?.req_accept ?? "0"}</span>
                         </p>
                         <h5
                             className="card-title d-flex align-items-center"
@@ -124,7 +124,7 @@ function TeacherCards({ teacher_id }) {
                                     }}
                                 />
                             </span>
-                            <span>{etude?.req_wait ?? "Yükleniyor..."}</span>
+                            <span>{etude?.req_wait ?? "0"}</span>
                         </p>
                         <h5
                             className="card-title d-flex align-items-center"
